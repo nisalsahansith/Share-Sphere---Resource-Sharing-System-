@@ -1,0 +1,318 @@
+ body {
+     background-color: #f4f6f8;
+ }
+
+ /* Sidebar */
+ #sidebar {
+     position: fixed;
+     top: 0;
+     left: -250px;
+     height: 100%;
+     width: 250px;
+     background-color: #343a40;
+     color: white;
+     transition: 0.3s;
+     padding-top: 60px;
+     z-index: 1050;
+ }
+
+ #sidebar.active {
+     left: 0;
+ }
+
+ #sidebar .close-btn {
+     position: absolute;
+     top: 10px;
+     right: 15px;
+     font-size: 1.5rem;
+     cursor: pointer;
+ }
+
+ #sidebar a {
+     color: white;
+     text-decoration: none;
+     padding: 10px;
+     display: block;
+ }
+
+ #sidebar a:hover {
+     background-color: #495057;
+ }
+
+ /* ===== Glassmorphism with Purple-Blue Theme ===== */
+
+ /* Sidebar */
+ #sidebar {
+     background: rgba(45, 32, 68, 0.55);
+     /* Deep purple glass */
+     backdrop-filter: blur(12px);
+     -webkit-backdrop-filter: blur(12px);
+     border-right: 1px solid rgba(255, 255, 255, 0.1);
+     box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+ }
+
+ /* === Purple–Blue Glass Navbar === */
+ .navbar-custom {
+     background: linear-gradient(135deg,
+             rgba(123, 47, 247, 0.85) 0%,
+             rgba(79, 172, 254, 0.85) 100%);
+     backdrop-filter: blur(10px);
+     -webkit-backdrop-filter: blur(10px);
+     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+ }
+
+ .navbar-custom .navbar-brand,
+ .navbar-custom .nav-link {
+     color: #ffffff;
+ }
+
+ .navbar-custom .nav-link:hover,
+ .navbar-custom .nav-link:focus {
+     color: #e6deff;
+     /* soft lavender for hover */
+ }
+
+ /* Make the sidebar toggle (☰) look good on the nav */
+ .navbar-custom .btn-outline-light {
+     border-color: rgba(255, 255, 255, 0.7);
+     color: #ffffff;
+ }
+
+ .navbar-custom .btn-outline-light:hover {
+     background: rgba(255, 255, 255, 0.9);
+     color: #3c2b84;
+     /* deep purple text on hover */
+ }
+
+ /* Search input to match glass theme */
+ .navbar-custom .form-control {
+     background: rgba(255, 255, 255, 0.15);
+     border: 1px solid rgba(255, 255, 255, 0.25);
+     color: #ffffff;
+ }
+
+ .navbar-custom .form-control::placeholder {
+     color: rgba(255, 255, 255, 0.75);
+ }
+
+ .navbar-custom .form-control:focus {
+     background: rgba(255, 255, 255, 0.22);
+     border-color: rgba(255, 255, 255, 0.45);
+     box-shadow: 0 0 0 .2rem rgba(123, 47, 247, 0.25);
+ }
+
+ /* Your current Search button is .btn-outline-success (green) — override to theme */
+ .navbar-custom .btn-outline-success {
+     border-color: #c6b8ff;
+     /* lavender border */
+     color: #c6b8ff;
+ }
+
+ .navbar-custom .btn-outline-success:hover {
+     background: #c6b8ff;
+     color: #2e2a47;
+     /* readable dark text on hover */
+     border-color: #c6b8ff;
+ }
+
+ /* Listing Cards */
+ .listing-card {
+     background: rgba(255, 255, 255, 0.15);
+     backdrop-filter: blur(12px);
+     -webkit-backdrop-filter: blur(12px);
+     border: 1px solid rgba(255, 255, 255, 0.25);
+     border-radius: 15px;
+     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+     transition: transform 0.2s ease, box-shadow 0.2s ease;
+ }
+
+ .listing-card:hover {
+     transform: translateY(-5px);
+     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+ }
+
+ .listing-card img {
+     height: 200px;
+     object-fit: cover;
+ }
+
+ /* Buttons */
+ .btn-primary {
+     background: linear-gradient(135deg, #7b2ff7, #4facfe);
+     /* Purple → Blue */
+     border: none;
+     color: white;
+ }
+
+ .btn-primary:hover {
+     background: linear-gradient(135deg, #6a23e6, #3b8bf3);
+ }
+
+ .btn-outline-primary {
+     border: 1px solid #7b2ff7;
+     color: #7b2ff7;
+ }
+
+ .btn-outline-primary:hover {
+     background: #7b2ff7;
+     color: white;
+ }
+
+ .btn-success {
+     background: linear-gradient(135deg, #6a5af9, #4facfe);
+     /* Purple → Blue */
+     border: none;
+     color: #fff;
+ }
+
+ .btn-success:hover {
+     background: linear-gradient(135deg, #5848e5, #3b8bf3);
+     /* Darker Purple → Rich Blue */
+     color: #fff;
+ }
+
+
+ /* Logout button */
+ .logout-btn {
+     background: #c72e6f;
+     /* Pinkish red for contrast */
+     color: white;
+     border: none;
+ }
+
+ .logout-btn:hover {
+     background: #a8255c;
+ }
+
+ /* Hero Section */
+ .hero-section {
+     background: linear-gradient(135deg,
+             rgba(106, 90, 249, 0.15),
+             /* soft purple tint */
+             rgba(79, 172, 254, 0.15)
+             /* soft blue tint */
+         );
+     backdrop-filter: blur(12px);
+     -webkit-backdrop-filter: blur(12px);
+     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+     padding-top: 2rem;
+     padding-bottom: 0rem;
+ }
+
+ .hero-section h1 {
+     font-size: 2.2rem;
+     color: #2e2a47;
+ }
+
+ .hero-section p {
+     font-size: 1rem;
+     max-width: 500px;
+ }
+
+ /* Hero Image */
+ .hero-image {
+     height: 300px;
+     width: 300px;
+     /* border-radius: 15px; */
+     /* box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); */
+ }
+
+ /* Modal */
+ .modal-content {
+     background: rgba(255, 255, 255, 0.2);
+     backdrop-filter: blur(14px);
+     -webkit-backdrop-filter: blur(14px);
+     border: 1px solid rgba(255, 255, 255, 0.25);
+     border-radius: 20px;
+     color: #ffffff;
+ }
+
+ /* Scrollbar */
+ #availableTimes::-webkit-scrollbar {
+     width: 6px;
+ }
+
+ #availableTimes::-webkit-scrollbar-thumb {
+     background: rgba(123, 47, 247, 0.5);
+     /* Purple */
+     border-radius: 10px;
+ }
+
+ #availableTimes::-webkit-scrollbar-track {
+     background: transparent;
+ }
+
+ .footer {
+     background: linear-gradient(135deg, #6a5af9, #4facfe);
+     color: #fff;
+     padding: 3rem 1rem 1rem;
+     margin-top: 3rem;
+ }
+
+ .footer-container {
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: space-between;
+     gap: 2rem;
+     max-width: 1200px;
+     margin: auto;
+ }
+
+ .footer-about,
+ .footer-links,
+ .footer-contact {
+     flex: 1;
+     min-width: 250px;
+ }
+
+ .footer h3,
+ .footer h4 {
+     margin-bottom: 1rem;
+     font-weight: bold;
+ }
+
+ .footer p,
+ .footer ul {
+     font-size: 0.9rem;
+     line-height: 1.6;
+ }
+
+ .footer-links ul {
+     list-style: none;
+     padding: 0;
+ }
+
+ .footer-links ul li {
+     margin-bottom: 0.5rem;
+ }
+
+ .footer-links ul li a {
+     color: #fff;
+     text-decoration: none;
+     transition: 0.3s;
+ }
+
+ .footer-links ul li a:hover {
+     text-decoration: underline;
+ }
+
+ .social-icons a {
+     display: inline-block;
+     margin-right: 0.5rem;
+     font-size: 1.2rem;
+     color: #fff;
+     transition: transform 0.3s ease;
+ }
+
+ .social-icons a:hover {
+     transform: scale(1.2);
+ }
+
+ .footer-bottom {
+     text-align: center;
+     padding-top: 1rem;
+     border-top: 1px solid rgba(255, 255, 255, 0.2);
+     margin-top: 2rem;
+     font-size: 0.85rem;
+ }

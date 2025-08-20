@@ -1,0 +1,106 @@
+:root {
+    --accent-1: #6a11cb;
+    --accent-2: #2575fc;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(106, 17, 203, 0.12), transparent 12%),
+        radial-gradient(900px 500px at 95% 90%, rgba(37, 117, 252, 0.10), transparent 10%),
+        linear-gradient(135deg, var(--accent-1), var(--accent-2));
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+.glass {
+    background: var(--accent-1);
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+    padding: 20px;
+}
+
+/* Brand styles remain unchanged */
+.brand {
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.brand .logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: #fff;
+    /* solid white background */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-1);
+    font-weight: 800;
+    font-size: 18px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* Sign-in card */
+.signin-card {
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 26px;
+    background: #3b1d96;
+    /* solid dark purple background */
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Floating features */
+.feature-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.15);
+    /* a little transparent but more solid */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-right: 14px;
+}
+
+/* small tweaks */
+.muted-white {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.muted-tiny {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 13px;
+}
+
+/* Responsive hero layout */
+@media (min-width: 992px) {
+    .hero-grid {
+        display: grid;
+        grid-template-columns: 1fr 420px;
+        gap: 40px;
+        align-items: center;
+    }
+}
+
+/* subtle entrance animation */
+.fade-up {
+    transform: translateY(10px);
+    opacity: 0;
+    transition: all 520ms cubic-bezier(.2, .9, .25, 1);
+}
+
+.fade-up.show {
+    transform: none;
+    opacity: 1;
+}

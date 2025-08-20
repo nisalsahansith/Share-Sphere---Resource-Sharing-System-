@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/user-dashboard.css">
+    <!-- SweetAlert2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css" rel="stylesheet">
+        
+    <!-- Optional: Animate.css for animations -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    
+    <!-- Optional: Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container-fluid">
+            <button class="btn btn-outline-light me-3" id="openSidebar">☰</button>
+            <a class="navbar-brand" href="#">Share Sphere</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">Browse</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/pages/post-a-listing.html">Post a Listing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/pages/myListing.html">My Listings</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">My Bookings
+                    <li class="nav-item"><a class="nav-link" href="#">Messages</a></li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search listings..." aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section ">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Left Content -->
+                <div class="col-md-6 text-center text-md-start mb-4 mb-md-0">
+                    <h1 class="fw-bold mb-3">Welcome to Share Sphere</h1>
+                    <p class="text-muted mb-4">
+                        Easily rent, lend, and share items within your community.
+                        Find what you need or earn by listing your own items.
+                    </p>
+                    <a href="#" class="btn btn-primary me-2">Browse Listings</a>
+                    <a href="/pages/post-a-listing.html" class="btn btn-outline-primary">Post a Listing</a>
+                </div>
+    
+                <!-- Right Image -->
+                <div class="col-md-6 text-center">
+                    <img src="/assets/images/herosection.webp" alt="Sharing Items" class="img-fluid hero-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <span class="close-btn" id="closeSidebar">&times;</span>
+        <h5 class="text-center mt-3">Profile</h5>
+        <hr class="bg-light">
+        <a href="#">View Profile</a>
+        <a href="#">Edit Profile</a>
+        <a href="#">Settings</a>
+        <button class="btn logout-btn w-100 mt-3">Logout</button>
+    </div>  
+
+    <div class="container mt-4">
+        <h3 class="mb-4">Browse Listings</h3>
+        <div class="d-flex flex-wrap gap-3">
+    
+            <!-- Listing 1 -->
+            <div class="card listing-card" style="width: 250px;">
+                <img src="https://earlyexperts.net/wp-content/uploads/2018/12/91dgNPGhBeL._SL1500_.jpg" class="card-img-top"
+                    alt="Listing">
+                <div class="card-body">
+                    <h5 class="card-title">Lawn Mower</h5>
+                    <p class="card-text">Available for rent</p>
+                    <p class="fw-bold">$5/hour | $30/day</p>
+                    <button class="btn btn-primary btn-sm view-btn" data-bs-toggle="modal" data-bs-target="#listingModal"
+                        data-title="Lawn Mower" data-pricehour="5" data-priceday="30"
+                        data-description="Powerful lawn mower in excellent condition, perfect for garden maintenance."
+                        data-conditions="Must return cleaned. Fuel not included."
+                        data-image="https://earlyexperts.net/wp-content/uploads/2018/12/91dgNPGhBeL._SL1500_.jpg">
+                        View
+                    </button>
+                </div>
+            </div>
+    
+            <!-- Listing 2 -->
+            <div class="card listing-card" style="width: 250px;">
+                <img src="https://th.bing.com/th/id/R.735c376ec0aba3d156db92300e05e813?rik=GhuYxDQkHp%2baMw&pid=ImgRaw&r=0"
+                    class="card-img-top" alt="Listing">
+                <div class="card-body">
+                    <h5 class="card-title">Electric Drill</h5>
+                    <p class="card-text">Available for rent</p>
+                    <p class="fw-bold">$3/hour | $20/day</p>
+                    <button class="btn btn-primary btn-sm view-btn" id="view-btn" data-bs-toggle="modal" data-bs-target="#listingModal"
+                        data-title="Electric Drill" data-pricehour="3" data-priceday="20"
+                        data-description="High-performance drill with multiple bits. Ideal for wood, metal, and masonry."
+                        data-conditions="Return with all accessories. Damage fees apply."
+                        data-image="https://th.bing.com/th/id/R.735c376ec0aba3d156db92300e05e813?rik=GhuYxDQkHp%2baMw&pid=ImgRaw&r=0">
+                        View
+                    </button>
+                </div>
+            </div>
+    
+        </div>
+    </div>
+    
+    <!-- View Modal -->
+    <div class="modal fade" id="listingModal" tabindex="-1" aria-labelledby="listingModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="listingModalLabel">Listing Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" id="modalCloseBtn"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img id="modalImage" class="img-fluid mb-3" src="" alt="Listing Image" />
+                    <h5 id="modalTitle"></h5>
+                    <p id="modalDescription"></p>
+                    <p><strong>Condition:</strong> <span id="modalCondition"></span></p>
+                    <p><strong>Price per Hour:</strong> $<span id="modalPriceHour"></span></p>
+                    <p><strong>Price per Day:</strong> $<span id="modalPriceDay"></span></p>
+    
+                    <hr />
+    
+                    <h6>Book this item</h6>
+                    <form id="bookingForm">
+                        <div class="mb-3 row">
+                            <label for="bookingHours" class="col-sm-4 col-form-label">Number of hours:</label>
+                            <div class="col-sm-8">
+                                <input type="number" min="0" step="1" class="form-control" id="bookingHours"
+                                    placeholder="0" />
+                            </div>
+                        </div>
+    
+                        <div class="mb-3 row">
+                            <label for="bookingDays" class="col-sm-4 col-form-label">Number of days:</label>
+                            <div class="col-sm-8">
+                                <input type="number" min="0" step="1" class="form-control" id="bookingDays"
+                                    placeholder="0" />
+                            </div>
+                        </div>
+    
+                        <div class="mb-3">
+                            <label>Available Days & Times:</label>
+                            <ul id="availableTimes" class="list-group list-group-flush"
+                                style="max-height:150px; overflow-y:auto;">
+                                <!-- dynamically populated list -->
+                            </ul>
+                        </div>
+    
+                        <button type="submit" class="btn btn-success w-100">Book Now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-about">
+                <h3>ShareSphere</h3>
+                <p>ShareSphere is your go-to platform for renting and lending items,skills safely and easily. Connect, share, and save
+                    today!</p>
+            </div>
+    
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Browse Listings</a></li>
+                    <li><a href="#">Post an Item</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+    
+            <div class="footer-contact">
+                <h4>Contact Us</h4>
+                <p>Email: support@sharesphere.com</p>
+                <p>Phone: +94 71 234 5678</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    
+        <div class="footer-bottom">
+            <p>&copy; 2025 ShareSphere. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.all.min.js"></script>
+    <script src="/js/user-dashboard.js"></script>
+</body>
+
+</html>

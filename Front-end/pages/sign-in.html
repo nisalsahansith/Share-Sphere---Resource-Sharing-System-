@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sign In - ShareSphere</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/sign-in.css">
+    <!-- SweetAlert2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css" rel="stylesheet">
+        
+    <!-- Optional: Animate.css for animations -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    
+    <!-- Optional: Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <header class="d-flex justify-content-between align-items-center py-3 px-4">
+        <div class="brand">
+            <div class="logo">SS</div>
+            <div>
+                <div style="font-size:18px">ShareSphere</div>
+                <div class="muted-tiny" style="color: rgba(255,255,255,0.7); font-size: 13px;">Skill & Tool Exchange</div>
+            </div>
+        </div>
+    
+        <nav class="d-flex gap-3 align-items-center">
+            <button id="openSignInBtn" class="btn btn-outline-light btn-sm" onclick="location.href='/'">Home</button>
+        </nav>
+    </header>
+
+    <div class="container-signin">
+        <!-- Info Section -->
+        <section class="signin-info">
+            <h2>Welcome Back to ShareSphere!</h2>
+            <p>Manage your skills and tool listings easily. Connect, chat, schedule, and exchange with trusted
+                community members.</p>
+
+            <ul class="features-list">
+                <li>Fast & smart skill matching</li>
+                <li>Secure in-app chat and scheduling</li>
+                <li>Easy payment & transaction tracking</li>
+                <li>Trusted by local communities and students</li>
+            </ul>
+        </section>
+
+        <!-- Sign In Form -->
+        <main class="signin-card">
+            <h2 class="mb-3 text-center">Sign In to ShareSphere</h2>
+            <p class="text-center text-muted mb-4">Enter your credentials to access your account.</p>
+
+            <form class="sign-in-form" id="signInForm">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="email" placeholder="you@example.com" required />
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="••••••••" required
+                        minlength="6" />
+                </div>
+                <div class="mb-3 d-flex justify-content-between align-items-center">
+                    <a href="#" class="text-muted">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Sign In</button>
+            </form>
+
+            <p class="text-center mt-4 text-muted">
+                Don't have an account? <a href="/pages/sign-up.html">Sign Up</a>
+            </p>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.all.min.js"></script>
+    <script src="/js/sign-in.js"></script>
+
+</body>
+
+</html>

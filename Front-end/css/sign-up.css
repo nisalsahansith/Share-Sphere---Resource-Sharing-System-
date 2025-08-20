@@ -1,0 +1,154 @@
+:root {
+    --accent-1: #6a11cb;
+    --accent-2: #2575fc;
+}
+
+body {
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+    color: white;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.brand {
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.brand .logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #fff4, #fff2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-1);
+    font-weight: 800;
+    font-size: 18px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.muted-tiny {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 13px;
+}
+
+header.d-flex {
+    padding: 1rem 1.5rem;
+}
+
+.container-signin {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    max-width: 900px;
+    width: 90%;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    display: flex;
+    overflow: hidden;
+    margin: 2rem auto;
+}
+
+.signin-info {
+    flex: 1;
+    padding: 40px 50px;
+    background: rgba(255 255 255 / 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.signin-info h2 {
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.signin-info p {
+    font-size: 1.1rem;
+    line-height: 1.4;
+    opacity: 0.9;
+}
+
+.features-list {
+    margin-top: 30px;
+    list-style: none;
+    padding: 0;
+    font-size: 1rem;
+}
+
+.features-list li {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.features-list li::before {
+    content: "✔️";
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+.signin-card {
+    flex: 1;
+    background: white;
+    color: #333;
+    border-radius: 0 16px 16px 0;
+    padding: 50px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-label {
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: var(--accent-1);
+    border: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: #4e07a8;
+}
+
+a {
+    color: var(--accent-1);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.text-muted {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+@media (max-width: 768px) {
+    .container-signin {
+        flex-direction: column;
+        max-width: 400px;
+    }
+
+    .signin-info {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 30px 30px;
+    }
+
+    .signin-card {
+        border-radius: 0 0 16px 16px;
+        padding: 40px 30px;
+    }
+}

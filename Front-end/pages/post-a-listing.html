@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post a Listing - ShareSphere</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/user-dashboard.css">
+    <!-- SweetAlert2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css" rel="stylesheet">
+        
+    <!-- Optional: Animate.css for animations -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    
+    <!-- Optional: Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .image-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    gap: 10px;
+}
+
+.image-upload-box, .image-thumbnail, .more-images {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.image-thumbnail {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+#image-upload-lbl{
+    margin-bottom: 16px;
+}
+.more-images {
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-upload-box i {
+    font-size: 24px;
+    color: white;
+}
+
+
+.table-thumbnail {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* Glass effect for table */
+.glass-table {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+.glass-table thead {
+    background: rgba(255, 255, 255, 0.25);
+}
+.table-thumbnail {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container-fluid">
+            <button class="btn btn-outline-light me-3" id="openSidebar">☰</button>
+            <a class="navbar-brand" href="#">Share Sphere</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">Browse</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">Post a Listing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">My Listings</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">My Bookings</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Messages</a></li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search listings..." aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Left Content -->
+                <div class="col-md-6 text-center text-md-start mb-4 mb-md-0">
+                    <h1 class="fw-bold mb-3">Post Your Listing</h1>
+                    <p class="text-muted mb-4">
+                        Easily share your items or services with the community. Fill out the form and start earning
+                        today!
+                    </p>
+                    <a href="#" class="btn btn-primary me-2">Browse Listings</a>
+                    <a href="#" class="btn btn-outline-primary">My Listings</a>
+                </div>
+
+                <!-- Right Image -->
+                <div class="col-md-6 text-center">
+                    <img src="/assets/images/post-a-listing-hero.png" alt="Post Listing" class="img-fluid hero-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <span class="close-btn" id="closeSidebar">&times;</span>
+        <h5 class="text-center mt-3">Profile</h5>
+        <hr class="bg-light">
+        <a href="#">View Profile</a>
+        <a href="#">Edit Profile</a>
+        <a href="#">Settings</a>
+        <button class="btn logout-btn w-100 mt-3">Logout</button>
+    </div>
+
+    <!-- Create Listing Card -->
+    <div class="container mt-5 mb-5">
+        <h3 class="mb-4">Browse Listings</h3>
+        <div class="d-flex flex-wrap gap-3">
+    
+            <!-- Create Listing Option -->
+            <div class="card listing-card d-flex justify-content-center align-items-center text-center"
+                style="width: 250px; height: 250px; cursor:pointer;" data-bs-toggle="modal"
+                data-bs-target="#createListingModal">
+                <div>
+                    <h1 class="text-primary">+</h1>
+                    <p class="fw-bold">Create Your Listing</p>
+                </div>
+            </div>
+    
+            <!-- Example Existing Listing Card -->
+            <div class="card listing-card" style="width: 250px;">
+                <img src="https://earlyexperts.net/wp-content/uploads/2018/12/91dgNPGhBeL._SL1500_.jpg" class="card-img-top"
+                    alt="Listing">
+                <div class="card-body">
+                    <h5 class="card-title">Lawn Mower</h5>
+                    <p class="card-text">Available for rent</p>
+                    <p class="fw-bold">$5/hour | $30/day</p>
+                    <button class="btn btn-primary btn-sm view-btn">View</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Create Listing Modal -->
+    <div class="modal fade" id="createListingModal" tabindex="-1" aria-labelledby="createListingModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content listing-card p-4">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createListingModalLabel">Create a New Listing</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createListingForm">
+                        <div class="mb-3">
+                            <label for="listingTitle" class="form-label">Item Title</label>
+                            <input type="text" class="form-control" id="listingTitle" placeholder="Enter title">
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="listingDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="listingDescription" rows="3"
+                                placeholder="Describe your item"></textarea>
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="listingLocation" class="form-label">Location</label>
+                            <input type="text" class="form-control" id="listingLocation" placeholder="Enter location">
+                        </div>
+    
+                        <div class="mb-3 row">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <label for="listingPriceHour" class="form-label">Price per Hour ($)</label>
+                                <input type="number" class="form-control" id="listingPriceHour" placeholder="0">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="listingPriceDay" class="form-label">Price per Day ($)</label>
+                                <input type="number" class="form-control" id="listingPriceDay" placeholder="0">
+                            </div>
+                        </div>
+    
+                        <div class="mb-3">
+                            <label for="listingCategory" class="form-label">Category</label>
+                            <select class="form-select" id="listingCategory">
+                                <option selected>Select a category</option>
+                                <option value="tools">Tools & Equipment</option>
+                                <option value="electronics">Electronics</option>
+                                <option value="sports">Sports & Outdoors</option>
+                                <option value="services">Services</option>
+                                <option value="others">Others</option>
+                            </select>
+                        </div>
+    
+                        <div>
+                            <label for="image" id="image-upload-lbl">Upload image</label>
+                        </div>
+                        <div id="imagePreviewContainer" class="image-grid">
+                            <label class="image-upload-box">+
+                                <i class="bi bi-plus"></i>
+                                <input type="file" id="listingImage" accept="image/*" multiple hidden>
+                            </label>
+                        </div>
+
+
+    
+                        <div class="mb-3">
+                            <label for="listingCondition" class="form-label">Item Condition</label>
+                            <input type="text" class="form-control" id="listingCondition"
+                                placeholder="e.g. Excellent, Good, Used">
+                        </div>
+    
+                        <div class="mb-3">
+                            <label class="form-label">Availability</label>
+                        
+                            <!-- Selection type -->
+                            <div class="d-flex gap-3 mb-2">
+                                <div>
+                                    <input type="radio" name="availabilityType" id="timeOption" value="time" checked>
+                                    <label for="timeOption">Specific Time Slot</label>
+                                </div>
+                                <div>
+                                    <input type="radio" name="availabilityType" id="dateOption" value="date">
+                                    <label for="dateOption">Date Range</label>
+                                </div>
+                            </div>
+                        
+                            <!-- Time slot fields -->
+                            <div id="timeFields">
+                                <div class="row g-2 mb-2">
+                                    <div class="col-md-6">
+                                        <label for="timeDate" class="form-label">Date</label>
+                                        <input type="date" id="timeDate" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <label for="startTime" class="form-label">Start Time</label>
+                                        <input type="time" id="startTime" class="form-control">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="endTime" class="form-label">End Time</label>
+                                        <input type="time" id="endTime" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <!-- Date range fields -->
+                            <div id="dateFields" class="d-none">
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <label for="startDate" class="form-label">Start Date</label>
+                                        <input type="date" id="startDate" class="form-control">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="endDate" class="form-label">End Date</label>
+                                        <input type="date" id="endDate" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+    
+                        <button type="submit" class="btn btn-success w-100">Post Listing</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Table of User Listings -->
+    <div class="container mb-5">
+        <h3 class="mb-4">Your Listings</h3>
+        <div class="table-responsive">
+            <table class="table glass-table align-middle">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Location</th>
+                        <th>Listed Date</th>
+                        <th>Availability</th>
+                        <th>Bookings</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <!-- ✅ Only one image (cover image) -->
+                        <td>
+                            <img src="/assets/images/" class="table-thumbnail" alt="Listing Image">
+                        </td>
+    
+                        <!-- Title -->
+                        <td>Cozy Apartment</td>
+    
+                        <!-- Location -->
+                        <td>Colombo</td>
+    
+                        <!-- Listed Date -->
+                        <td>2025-08-18</td>
+    
+                        <!-- Availability -->
+                        <td>
+                            <!-- Example: Date Range -->
+                            <span class="badge bg-info">2025-08-20 → 2025-08-25</span>
+                            <!-- Or: Time Slot -->
+                            <!-- <span class="badge bg-success">2025-08-21 (10:00 - 14:00)</span> -->
+                        </td>
+    
+                        <!-- Bookings Count -->
+                        <td><span class="badge bg-secondary">5</span></td>
+    
+                        <!-- Actions -->
+                        <td>
+                            <button class="btn btn-warning btn-sm edit-btn" data-title="Cozy Apartment"
+                                data-description="Nice apartment in Colombo" data-location="Colombo" data-pricehour="5" data-priceday="30"
+                                data-category="services" data-condition="Good" data-availabilitytype="date" data-startdate="2025-08-20"
+                                data-enddate="2025-08-25" data-images='["https://example.com/image1.jpg","https://example.com/image2.jpg"]'>
+                                Edit
+                            </button>
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Edit Listing Modal -->
+    <div class="modal fade" id="editListingModal" tabindex="-1" aria-labelledby="editListingModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content listing-card p-4">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editListingModalLabel">Edit Listing</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editListingForm">
+                        <!-- Item Title -->
+                        <div class="mb-3">
+                            <label for="editListingTitle" class="form-label">Item Title</label>
+                            <input type="text" class="form-control" id="editListingTitle" placeholder="Enter title">
+                        </div>
+    
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <label for="editListingDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="editListingDescription" rows="3"
+                                placeholder="Describe your item"></textarea>
+                        </div>
+    
+                        <!-- Location -->
+                        <div class="mb-3">
+                            <label for="editListingLocation" class="form-label">Location</label>
+                            <input type="text" class="form-control" id="editListingLocation" placeholder="Enter location">
+                        </div>
+    
+                        <!-- Prices -->
+                        <div class="mb-3 row">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <label for="editListingPriceHour" class="form-label">Price per Hour ($)</label>
+                                <input type="number" class="form-control" id="editListingPriceHour" placeholder="0">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="editListingPriceDay" class="form-label">Price per Day ($)</label>
+                                <input type="number" class="form-control" id="editListingPriceDay" placeholder="0">
+                            </div>
+                        </div>
+    
+                        <!-- Category -->
+                        <div class="mb-3">
+                            <label for="editListingCategory" class="form-label">Category</label>
+                            <select class="form-select" id="editListingCategory">
+                                <option value="">Select a category</option>
+                                <option value="tools">Tools & Equipment</option>
+                                <option value="electronics">Electronics</option>
+                                <option value="sports">Sports & Outdoors</option>
+                                <option value="services">Services</option>
+                                <option value="others">Others</option>
+                            </select>
+                        </div>
+    
+                        <!-- Images -->
+                        <div class="mb-3">
+                            <label class="form-label">Images</label>
+                            <div id="editImagePreviewContainer" class="image-grid">
+                                <!-- Existing images will be dynamically inserted here -->
+                            </div>
+                            <label class="image-upload-box mt-2">
+                                + <i class="bi bi-plus"></i>
+                                <input type="file" id="editListingImage" accept="image/*" multiple hidden>
+                            </label>
+                            <small class="text-muted d-block mt-1">Click the trash icon to remove an image.</small>
+                        </div>
+    
+                        <!-- Item Condition -->
+                        <div class="mb-3">
+                            <label for="editListingCondition" class="form-label">Item Condition</label>
+                            <input type="text" class="form-control" id="editListingCondition"
+                                placeholder="e.g. Excellent, Good, Used">
+                        </div>
+    
+                        <!-- Availability -->
+                        <div class="mb-3">
+                            <label class="form-label">Availability</label>
+                            <div class="d-flex gap-3 mb-2">
+                                <div>
+                                    <input type="radio" name="editAvailabilityType" id="editTimeOption" value="time"
+                                        checked>
+                                    <label for="editTimeOption">Specific Time Slot</label>
+                                </div>
+                                <div>
+                                    <input type="radio" name="editAvailabilityType" id="editDateOption" value="date">
+                                    <label for="editDateOption">Date Range</label>
+                                </div>
+                            </div>
+    
+                            <!-- Time Slot Fields -->
+                            <div id="editTimeFields">
+                                <div class="row g-2 mb-2">
+                                    <div class="col-md-6">
+                                        <label for="editTimeDate" class="form-label">Date</label>
+                                        <input type="date" id="editTimeDate" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <label for="editStartTime" class="form-label">Start Time</label>
+                                        <input type="time" id="editStartTime" class="form-control">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="editEndTime" class="form-label">End Time</label>
+                                        <input type="time" id="editEndTime" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <!-- Date Range Fields -->
+                            <div id="editDateFields" class="d-none">
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <label for="editStartDate" class="form-label">Start Date</label>
+                                        <input type="date" id="editStartDate" class="form-control">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="editEndDate" class="form-label">End Date</label>
+                                        <input type="date" id="editEndDate" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <button type="submit" class="btn btn-success w-100">Update Listing</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-about">
+                <h3>ShareSphere</h3>
+                <p>ShareSphere is your go-to platform for renting and lending items safely and easily. Connect, share,
+                    and save today!</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Browse Listings</a></li>
+                    <li><a href="#">Post an Item</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-contact">
+                <h4>Contact Us</h4>
+                <p>Email: support@sharesphere.com</p>
+                <p>Phone: +94 71 234 5678</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 ShareSphere. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.all.min.js"></script>
+    <script src="/js/post-a-listing.js"></script>
+</body>
+
+</html>

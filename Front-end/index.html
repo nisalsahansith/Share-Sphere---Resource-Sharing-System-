@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>ShareSphere - Welcome</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/welcomepage.css">
+    <!-- SweetAlert2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css" rel="stylesheet">
+    
+    
+    <!-- Optional: Animate.css for animations -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    
+    <!-- Optional: Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container py-5">
+        <!-- Header -->
+        <header class="d-flex justify-content-between align-items-center mb-4">
+            <div class="brand">
+                <div class="logo">SS</div>
+                <div>
+                    <div style="font-size:18px">ShareSphere</div>
+                    <div class="muted-tiny">Skill & Tool Exchange</div>
+                </div>
+            </div>
+
+            <nav class="d-flex gap-3 align-items-center">
+                <a href="#" class="text-white text-decoration-none muted-tiny">How it works</a>
+                <a href="#" class="text-white text-decoration-none muted-tiny">Pricing</a>
+                <button id="openSignInBtn" class="btn btn-outline-light btn-sm">Sign In</button>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <main class="glass p-4 p-lg-5">
+            <div class="hero-grid">
+                <!-- Left Section -->
+                <div class="pe-3">
+                    <h1 class="display-6 fw-bold mb-3 muted-white">Share skills. Lend tools. Build trust.</h1>
+                    <p class="muted-tiny mb-4">
+                        ShareSphere helps your community exchange talents and items — securely and simply.
+                        Set prices, chat with users, schedule exchanges, and review transactions.
+                    </p>
+
+                    <div class="d-flex gap-3 mb-4">
+                        <div class="glass p-3" style="flex:1">
+                            <div class="d-flex align-items-start">
+                                <div class="feature-icon">⚡</div>
+                                <div>
+                                    <div class="fw-semibold">Fast Matching</div>
+                                    <div class="muted-tiny">Find the right person quickly with smart search.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass p-3" style="flex:1">
+                            <div class="d-flex align-items-start">
+                                <div class="feature-icon">💬</div>
+                                <div>
+                                    <div class="fw-semibold">In-app Chat</div>
+                                    <div class="muted-tiny">Discuss terms and schedule sessions instantly.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <a href="/pages/sign-in.html" class="btn btn-light btn-lg">Sign In</a>
+                        <a href="/pages/sign-up.html" class="btn btn-outline-light btn-lg">Sign Up</a>
+                    </div>
+
+                    <div class="mt-4 muted-tiny">Trusted by local communities and student groups.</div>
+                </div>
+
+                <!-- Right Section Image -->
+                <div class="d-flex align-items-center justify-content-center">
+                    <img src="https://tse1.mm.bing.net/th/id/OIP.ygD0pIPQ5P4sEzJ2tApRugHaE8?rs=1&pid=ImgDetMain&o=7&rm=3"
+                        class="img-fluid rounded shadow-lg" alt="Community Exchange">
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="text-center mt-4 muted-tiny">
+            © <span id="year"></span> ShareSphere - Built with ❤️ for your assessment
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.all.min.js"></script>
+
+    
+</body>
+
+</html>
