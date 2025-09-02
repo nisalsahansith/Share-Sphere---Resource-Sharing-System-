@@ -1,0 +1,66 @@
+
+.chat-item.active {
+    background: rgba(123, 47, 247, 0.2);
+    font-weight: bold;
+}
+
+.chat-item {
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.chat-item:hover {
+    background: rgba(123, 47, 247, 0.15);
+}
+
+.chat-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    /* space between messages */
+    padding: 10px;
+    max-height: 400px;
+    /* adjust for your layout */
+    overflow-y: auto;
+}
+
+.chat-body .message {
+    padding: 10px 15px;
+    border-radius: 15px;
+    max-width: 70%;
+    word-wrap: break-word;
+}
+
+.chat-body .incoming {
+    background: rgba(123, 47, 247, 0.15);
+    color: #2e2a47;
+    align-self: flex-start;
+    /* push left */
+}
+
+.chat-body .outgoing {
+    background: linear-gradient(135deg, #7b2ff7, #4facfe);
+    color: #fff;
+    align-self: flex-end;
+    /* push right */
+}
+
+.chat-body .chat-image {
+    max-width: 200px;
+    border-radius: 10px;
+    margin-top: 5px;
+    display: block;
+}
+
+.chat-body .chat-location {
+    display: inline-block;
+    padding: 8px 12px;
+    background: rgba(79, 172, 254, 0.15);
+    border-radius: 10px;
+    color: #2e2a47;
+    text-decoration: none;
+}
+
+.chat-body .chat-location:hover {
+    background: rgba(79, 172, 254, 0.25);
+}

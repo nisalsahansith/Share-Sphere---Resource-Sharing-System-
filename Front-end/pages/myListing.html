@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Listings - ShareSphere</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/user-dashboard.css">
     <link rel="stylesheet" href="/css/myListing.css">
+    <link rel="stylesheet" href="/css/post-a-listing.css">
     <!-- SweetAlert2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css" rel="stylesheet">
         
@@ -27,11 +29,11 @@
             <a class="navbar-brand" href="#">Share Sphere</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link" href="#">Browse</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Post a Listing</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="#">My Listings</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">My Bookings</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Messages</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/pages/browse-listings.html">Browse</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/pages/post-a-listing.html">Post a Listing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/pages/myListing.html">My Listings</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/pages/my-bookings.html">My Bookings</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/pages/messages.html">Messages</a></li>
                 </ul>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search listings..." aria-label="Search">
@@ -71,7 +73,16 @@
         </div>
     </section>
 
-    
+    <div id="sidebar">
+        <span class="close-btn" id="closeSidebar">&times;</span>
+        <h5 class="text-center mt-3">Profile</h5>
+        <hr class="bg-light">
+        <a href="#">View Profile</a>
+        <a href="#">Edit Profile</a>
+        <a href="#">Settings</a>
+        <button class="btn logout-btn w-100 mt-3">Logout</button>
+    </div>
+
     
     <!-- Glass Effect CSS -->
     
@@ -92,7 +103,7 @@
                         <p><span class="badge bg-info">2025-08-20 → 2025-08-25</span></p>
                         <p><strong>Bookings:</strong> <span class="badge bg-secondary">3</span></p>
                         <div class="card-actions">
-                            <i class="bi bi-pencil-square text-warning action-icon"></i>
+                            <i class="bi bi-pencil-square text-warning action-icon" data-bs-toggle="modal" data-bs-target="#editListingModal"></i>
                             <i class="bi bi-trash text-danger action-icon"></i>
                         </div>
                     </div>
@@ -110,7 +121,7 @@
                         <p><span class="badge bg-success">2025-08-21 (10:00 - 14:00)</span></p>
                         <p><strong>Bookings:</strong> <span class="badge bg-secondary">1</span></p>
                         <div class="card-actions">
-                            <i class="bi bi-pencil-square text-warning action-icon"></i>
+                            <i class="bi bi-pencil-square text-warning action-icon" data-bs-toggle="modal" data-bs-target="#editListingModal"></i>
                             <i class="bi bi-trash text-danger action-icon"></i>
                         </div>
                     </div>
@@ -118,6 +129,143 @@
             </div>
         </div>
     </div>
+
+    <!-- Edit Listing Modal -->
+    <div class="modal fade" id="editListingModal" tabindex="-1" aria-labelledby="editListingModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content listing-card p-4">
+    
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editListingModalLabel">Edit Listing</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+    
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <form id="editListingForm">
+    
+                        <!-- Item Title -->
+                        <div class="mb-3">
+                            <label for="editListingTitle" class="form-label">Item Title</label>
+                            <input type="text" class="form-control" id="editListingTitle" placeholder="Enter title">
+                        </div>
+    
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <label for="editListingDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="editListingDescription" rows="3"
+                                placeholder="Describe your item"></textarea>
+                        </div>
+    
+                        <!-- Location -->
+                        <div class="mb-3">
+                            <label for="editListingLocation" class="form-label">Location</label>
+                            <input type="text" class="form-control" id="editListingLocation" placeholder="Enter location">
+                        </div>
+    
+                        <!-- Prices -->
+                        <div class="mb-3 row">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <label for="editListingPriceHour" class="form-label">Price per Hour ($)</label>
+                                <input type="number" class="form-control" id="editListingPriceHour" placeholder="0">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="editListingPriceDay" class="form-label">Price per Day ($)</label>
+                                <input type="number" class="form-control" id="editListingPriceDay" placeholder="0">
+                            </div>
+                        </div>
+    
+                        <!-- Category -->
+                        <div class="mb-3">
+                            <label for="editListingCategory" class="form-label">Category</label>
+                            <select class="form-select" id="editListingCategory">
+                                <option value="">Select a category</option>
+                                <option value="tools">Tools & Equipment</option>
+                                <option value="electronics">Electronics</option>
+                                <option value="sports">Sports & Outdoors</option>
+                                <option value="services">Services</option>
+                                <option value="others">Others</option>
+                            </select>
+                        </div>
+    
+                        <!-- Images -->
+                        <div class="mb-3">
+                            <label class="form-label">Images</label>
+                            <div id="editImagePreviewContainer" class="image-grid">
+                                <!-- Existing images will be dynamically inserted here -->
+                            </div>
+                            <label class="image-upload-box mt-2">
+                                 <i class="bi bi-plus"></i>
+                                <input type="file" id="editListingImage" accept="image/*" multiple hidden>
+                            </label>
+                            <small class="text-muted d-block mt-1">Click the trash icon to remove an image.</small>
+                        </div>
+    
+                        <!-- Item Condition -->
+                        <div class="mb-3">
+                            <label for="editListingCondition" class="form-label">Item Condition</label>
+                            <input type="text" class="form-control" id="editListingCondition"
+                                placeholder="e.g. Excellent, Good, Used">
+                        </div>
+    
+                        <!-- Availability -->
+                        <div class="mb-3">
+                            <label class="form-label">Availability</label>
+                            <div class="d-flex gap-3 mb-2">
+                                <div>
+                                    <input type="radio" name="editAvailabilityType" id="editTimeOption" value="time"
+                                        checked>
+                                    <label for="editTimeOption">Specific Time Slot</label>
+                                </div>
+                                <div>
+                                    <input type="radio" name="editAvailabilityType" id="editDateOption" value="date">
+                                    <label for="editDateOption">Date Range</label>
+                                </div>
+                            </div>
+    
+                            <!-- Time Slot Fields -->
+                            <div id="editTimeFields">
+                                <div class="row g-2 mb-2">
+                                    <div class="col-md-6">
+                                        <label for="editTimeDate" class="form-label">Date</label>
+                                        <input type="date" id="editTimeDate" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <label for="editStartTime" class="form-label">Start Time</label>
+                                        <input type="time" id="editStartTime" class="form-control">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="editEndTime" class="form-label">End Time</label>
+                                        <input type="time" id="editEndTime" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <!-- Date Range Fields -->
+                            <div id="editDateFields" class="d-none">
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <label for="editStartDate" class="form-label">Start Date</label>
+                                        <input type="date" id="editStartDate" class="form-control">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="editEndDate" class="form-label">End Date</label>
+                                        <input type="date" id="editEndDate" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <button type="submit" class="btn btn-success w-100">Update Listing</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Footer -->
     <footer class="footer">
@@ -160,6 +308,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.all.min.js"></script>
+    <script src="/js/user-dashboard.js"></script>
+    <script src="/js/post-a-listing.js"></script>
+
+
     <!-- Bootstrap icons for edit/delete -->
 </body>
 

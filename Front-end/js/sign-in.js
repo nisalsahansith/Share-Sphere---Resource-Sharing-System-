@@ -30,6 +30,8 @@ $('.sign-in-form').on('submit', function (event) {
             
             if (response.code === 200) {
                 alert("Login successful! " + response.data);
+                localStorage.setItem("userId", response.data.id);
+                localStorage.setItem("token", response.data.accessToken);
                 redirectToDashboard(response.data.role);
             } else {
                 alert("Unexpected response: " + response.data);

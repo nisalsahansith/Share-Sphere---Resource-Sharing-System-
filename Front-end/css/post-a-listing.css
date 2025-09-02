@@ -1,0 +1,206 @@
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    gap: 10px;
+}
+
+.image-upload-box,
+.image-thumbnail,
+.more-images {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.image-thumbnail {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+#image-upload-lbl {
+    margin-bottom: 16px;
+}
+
+.more-images {
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-upload-box i {
+    font-size: 24px;
+    color: white;
+}
+
+/* Container & Heading */
+.container {
+    padding: 2rem 1rem;
+    color: #222;
+}
+
+h3 {
+    font-weight: 700;
+    /* color: #111; */
+    margin-bottom: 1.5rem;
+}
+
+/* Glass / Card Effect Table */
+.glass-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(6px);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.glass-table:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Table Header */
+.glass-table thead {
+    background: rgba(245, 245, 245, 0.95);
+}
+
+.glass-table thead th {
+    font-weight: 600;
+    color: #111;
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Table Body */
+.glass-table tbody td {
+    padding: 12px 15px;
+    color: #333;
+    vertical-align: middle;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    font-size: 0.95rem;
+}
+
+/* Hover effect on rows */
+.glass-table tbody tr:hover {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+/* Table Thumbnails */
+.table-thumbnail {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.table-thumbnail:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* Buttons in Actions */
+.btn-warning,
+.btn-danger {
+    font-size: 0.85rem;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-warning {
+    background: #ffc107;
+    border: none;
+    color: #111;
+}
+
+.btn-warning:hover {
+    background: #ffca28;
+    transform: scale(1.05);
+}
+
+.btn-danger {
+    background: #f44336;
+    border: none;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background: #e53935;
+    transform: scale(1.05);
+}
+
+/* No tools message */
+#noToolsMessage {
+    font-style: italic;
+    color: #555;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+/* Responsive Table */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Hover effect on table rows */
+.glass-table tbody tr:hover {
+    background-color: #f0f0f0;
+    /* light gray */
+    transition: background-color 0.2s ease;
+}
+
+/* Optional: Keep text color readable */
+.glass-table tbody tr:hover td {
+    background-color: #b8bbcfa2;
+}
+
+/* Button styling */
+.btn-dynamic {
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-edit {
+    background-color: #4CAF50; /* green */
+}
+.btn-edit:hover {
+    background-color: #45a049;
+}
+
+.btn-delete {
+    background-color: #f44336; /* red */
+}
+.btn-delete:hover {
+    background-color: #d32f2f;
+}
+
+/* Optional: row hover for table */
+#skillsTable tbody tr:hover,
+#toolsTable tbody tr:hover {
+    background-color: #f2f2f2; /* light gray */
+}

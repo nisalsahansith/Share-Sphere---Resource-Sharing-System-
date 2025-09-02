@@ -29,8 +29,8 @@ public class AuthService {
             throw new BadCredentialsException("Password incorrect");
         }
 
-        String token = jwtUtil.generateToken(user.getUsername());
-        return new AuthResponseDto(token,user.getRole().name());
+        String token = jwtUtil.generateToken(user.getEmail());
+        return new AuthResponseDto(token,user.getRole().name(),user.getId());
     }
 
     public String register(RegisterDto registerDto){

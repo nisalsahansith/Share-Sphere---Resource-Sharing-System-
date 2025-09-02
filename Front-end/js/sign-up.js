@@ -1,7 +1,7 @@
 $('.signUp-form').on('submit', function(event) {
     event.preventDefault();
     
-    const fullName = $('#fullname').val().trim();
+    const fullName = $('#username').val().trim();
     const email = $('#email').val().trim();
     const password = $('#password').val().trim();
     
