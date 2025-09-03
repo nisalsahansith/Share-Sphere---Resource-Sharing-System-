@@ -79,7 +79,7 @@ public class PostAListingController {
         return ResponseEntity.ok(new APIResponse(200, "ok", skill));
     }
 
-    @PostMapping("/updatelisting")
+    @PostMapping(value = "/updatelisting", consumes = "multipart/form-data")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<APIResponse> postASkill(
             @RequestParam("listingId") String listingId,
@@ -92,11 +92,12 @@ public class PostAListingController {
             @RequestParam("priceId") String priceId,
             @RequestParam("price") Double price,
             @RequestParam("listingType") String listingType,
-            @RequestParam("condition") String condition,
-            @RequestParam("country") String country,
-            @RequestParam("state") String state,
-            @RequestParam(value = "existingImages",required = false) String existingImagesUrls,
-            @RequestParam("images") MultipartFile[] images) {
+            @RequestParam(value = "condition", required = false) String condition,
+            @RequestParam(value = "country", required = false) String country,
+            @RequestParam(value = "state",required = false) String state,
+            @RequestParam(value = "existingImages",required = false) List<String> existingImagesUrls,
+            @RequestParam(value = "images",required = false) MultipartFile[] images) {
+        System.out.println(listingType);
         if ("SKILL".equalsIgnoreCase(listingType)) {
             SkillDto skillDto = new SkillDto();
             skillDto.setSkillId(Long.valueOf(listingId));
@@ -104,7 +105,7 @@ public class PostAListingController {
             skillDto.setDescription(description);
             skillDto.setAvailability(Skill.Availability.valueOf(availability));
             skillDto.setCreatedAt(LocalDateTime.now());
-            skillDto.setImageUrls(Collections.singletonList(existingImagesUrls));
+            skillDto.setImageUrls(existingImagesUrls);
             skillDto.setStartDate(LocalDate.parse(startDate));
             skillDto.setEndDate(LocalDate.parse(endDate));
 
@@ -123,7 +124,7 @@ public class PostAListingController {
             toolDto.setCondition(condition);
             toolDto.setCountry(country);
             toolDto.setState(state);
-            toolDto.setImageUrls(Collections.singletonList(existingImagesUrls));
+            toolDto.setImageUrls(existingImagesUrls);
             toolDto.setStartDate(LocalDate.parse(startDate));
             toolDto.setEndDate(LocalDate.parse(endDate));
             toolDto.setCreatedAt(LocalDateTime.now());

@@ -302,7 +302,7 @@ $(document).ready(function () {
         formData.append("description", $("#editListingDescription").val());
         formData.append("startDate", $("#editStartDate").val());
         formData.append("endDate", $("#editEndDate").val());
-        formData.append("availability", $("#editAvailability").val());
+        formData.append("availability", $("#editAvailability").val() || "AVAILABLE");
         formData.append("priceType", $("#editListingPriceType").val());
         formData.append("price", $("#editListingPriceDay").val());
         formData.append("listingType", listingType);
@@ -398,6 +398,8 @@ $(document).ready(function () {
                 $("#ListingId").text(listing.skillId || listing.toolId);
                 $("#editListingType").val(type);
                 $("#editListingTitle").val(listing.name || "");
+                $("#editListingPriceId").val(listing.pricingId);
+                console.log("Price ID:", listing.pricingId);
                 $("#editListingDescription").val(listing.description || "");
                 $("#editListingPriceType").val(listing.priceType?.toLowerCase() || "");
                 $("#editListingPriceDay").val(listing.price || "");

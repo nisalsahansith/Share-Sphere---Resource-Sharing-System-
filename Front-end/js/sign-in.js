@@ -29,12 +29,24 @@ $('.sign-in-form').on('submit', function (event) {
         success: function (response) {
             
             if (response.code === 200) {
-                alert("Login successful! " + response.data);
+                Swal.fire({
+                icon: 'success',
+                title: 'Login Successful!',
+                text: 'Welcome back, ' + response.data.role + '!',
+                showConfirmButton: false,
+                timer: 2000
+            });
+
                 localStorage.setItem("userId", response.data.id);
                 localStorage.setItem("token", response.data.accessToken);
                 redirectToDashboard(response.data.role);
             } else {
-                alert("Unexpected response: " + response.data);
+                Swal.fire({
+                icon: 'warning',
+                title: 'Unexpected Response',
+                text: response.data,
+                confirmButtonText: 'OK'
+            });
             }
         },
         error: function (xhr, status, error) {
@@ -58,7 +70,12 @@ $('.sign-in-form').on('submit', function (event) {
                     errorMessage += "An unexpected error occurred.";
             }
             
-            alert(errorMessage);
+            Swal.fire({
+            icon: errorIcon,
+            title: errorTitle,
+            text: errorMessage,
+            confirmButtonText: 'Try Again'
+        });
         },
         complete: function () {
             submitButton.prop('disabled', false).text('Sign In');
