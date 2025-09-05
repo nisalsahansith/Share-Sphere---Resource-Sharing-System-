@@ -7,38 +7,93 @@
     <title>User Messages</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/messages.css">
-    <link rel="stylesheet" href="/css/user-dashboard.css">    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/basic-css.css">    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
 </head>
 
 <body>
-    <!-- Navbar -->
+    <!-- Enhanced Navbar -->
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container-fluid">
-            <button class="btn btn-outline-light me-3" id="openSidebar">☰</button>
-            <a class="navbar-brand" href="/pages/user-dashboard.html">Share Sphere</a>
-            <div class="collapse navbar-collapse">
+            <button class="btn btn-outline-light me-3" id="openSidebar">
+                <i class="fas fa-bars"></i>
+            </button>
+            <a class="navbar-brand" href="/pages/user-dashboard.html">ShareSphere</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link" href="/pages/browse-listings.html">Browse</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/pages/post-a-listing.html">Post a Listing</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/pages/myListing.html">My Listings</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/pages/my-bookings.html">My Bookings</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="/pages/messages.html">Messages</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/pages/browse-listings.html">
+                            <i class="fas fa-search me-1"></i>Browse
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pages/post-a-listing.html">
+                            <i class="fas fa-plus me-1"></i>Post Listing
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pages/myListing.html">
+                            <i class="fas fa-list me-1"></i>My Listings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pages/my-bookings.html">
+                            <i class="fas fa-calendar me-1"></i>My Bookings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pages/my-requests.html">
+                            <i class="fas fa-clipboard-list me-1"></i>My Requests
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pages/messages.html">
+                            <i class="fas fa-comments me-1"></i>Messages
+                        </a>
+                    </li>
                 </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search listings..." aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
             </div>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fas fa-bars text-primary"></i>
+            </button>
         </div>
     </nav>
 
-    <!-- Sidebar -->
+    <!-- Enhanced Sidebar -->
     <div id="sidebar">
-        <span class="close-btn" id="closeSidebar">&times;</span>
-        <h5 class="text-center mt-3">Profile</h5>
-        <hr class="bg-light">
-        <a href="#">View Profile</a>
-        <a href="#">Edit Profile</a>
-        <a href="#">Settings</a>
-        <button class="btn logout-btn w-100 mt-3">Logout</button>
+        <button class="close-btn" id="closeSidebar">
+            <i class="fas fa-times"></i>
+        </button>
+        <h5 class="text-center mt-3 mb-4">
+            <i class="fas fa-user-circle me-2"></i>Profile
+        </h5>
+        <hr class="mx-3 mb-4">
+        <a href="#" class="sidebar-link">
+            <i class="fas fa-user me-2"></i>View Profile
+        </a>
+        <a href="#" class="sidebar-link">
+            <i class="fas fa-edit me-2"></i>Edit Profile
+        </a>
+        <a href="#" class="sidebar-link">
+            <i class="fas fa-cog me-2"></i>Settings
+        </a>
+        <a href="#" class="sidebar-link">
+            <i class="fas fa-bell me-2"></i>Notifications
+        </a>
+        <a href="#" class="sidebar-link">
+            <i class="fas fa-question-circle me-2"></i>Help & Support
+        </a>
+        <button class="btn logout-btn w-auto">
+            <i class="fas fa-sign-out-alt me-2"></i>Logout
+        </button>
     </div>
 
     <!-- Messaging Section -->

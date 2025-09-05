@@ -29,4 +29,8 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Tool> tools;
+
+    // One-to-one mapping with UserProfile
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private UserProfile profile;
 }

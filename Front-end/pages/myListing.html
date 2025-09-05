@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Listings - ShareSphere</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/user-dashboard.css">
+    <link rel="stylesheet" href="/css/basic-css.css">
     <link rel="stylesheet" href="/css/myListing.css">
     <link rel="stylesheet" href="/css/post-a-listing.css">
     <!-- SweetAlert2 CSS -->
@@ -22,113 +22,268 @@
 </head>
 
 <body>
-    <!-- Navbar -->
+    <!-- Enhanced Navbar -->
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container-fluid">
-            <button class="btn btn-outline-light me-3" id="openSidebar">☰</button>
-            <a class="navbar-brand" href="#">Share Sphere</a>
-            <div class="collapse navbar-collapse">
+            <button class="btn btn-outline-light me-3" id="openSidebar">
+                <i class="fas fa-bars"></i>
+            </button>
+            <a class="navbar-brand" href="/pages/user-dashboard.html">ShareSphere</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link" href="/pages/browse-listings.html">Browse</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/pages/post-a-listing.html">Post a Listing</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/pages/myListing.html">My Listings</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/pages/my-bookings.html">My Bookings</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="/pages/messages.html">Messages</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/pages/browse-listings.html">
+                            <i class="fas fa-search me-1"></i>Browse
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pages/post-a-listing.html">
+                            <i class="fas fa-plus me-1"></i>Post Listing
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pages/myListing.html">
+                            <i class="fas fa-list me-1"></i>My Listings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pages/my-bookings.html">
+                            <i class="fas fa-calendar me-1"></i>My Bookings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pages/my-requests.html">
+                            <i class="fas fa-clipboard-list me-1"></i>My Requests
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pages/messages.html">
+                            <i class="fas fa-comments me-1"></i>Messages
+                        </a>
+                    </li>
                 </ul>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search listings..." aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <button class="btn btn-outline-success" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
                 </form>
             </div>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fas fa-bars text-primary"></i>
+            </button>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero-section py-5" style="background: linear-gradient(135deg, #f0f4ff, #ffffff);">
+    <!-- Enhanced Sidebar -->
+    <div id="sidebar">
+        <button class="close-btn" id="closeSidebar">
+            <i class="fas fa-times"></i>
+        </button>
+        <h5 class="text-center mt-3 mb-4">
+            <i class="fas fa-user-circle me-2"></i>Profile
+        </h5>
+        <hr class="mx-3 mb-4">
+        <a href="#" class="sidebar-link">
+            <i class="fas fa-user me-2"></i>View Profile
+        </a>
+        <a href="#" class="sidebar-link">
+            <i class="fas fa-edit me-2"></i>Edit Profile
+        </a>
+        <a href="#" class="sidebar-link">
+            <i class="fas fa-cog me-2"></i>Settings
+        </a>
+        <a href="#" class="sidebar-link">
+            <i class="fas fa-bell me-2"></i>Notifications
+        </a>
+        <a href="#" class="sidebar-link">
+            <i class="fas fa-question-circle me-2"></i>Help & Support
+        </a>
+        <button class="btn logout-btn w-auto">
+            <i class="fas fa-sign-out-alt me-2"></i>Logout
+        </button>
+    </div>
+
+    <!-- Enhanced Hero Section -->
+    <section class="hero-section">
         <div class="container">
             <div class="row align-items-center">
-    
-                <!-- Left Content -->
-                <div class="col-md-6 text-center text-md-start mb-4 mb-md-0">
+                <div class="col-md-6 text-center text-md-start mb-4 mb-md-0 fade-in">
                     <h1 class="fw-bold mb-3">Post Your Listing</h1>
-                    <p class="text-muted mb-4">
+                    <p class="mb-4">
                         Easily share your items or services with the community. Fill out the form and start earning today!
                     </p>
-                    <a href="#" class="btn btn-primary me-2">
-                        <i class="bi bi-search"></i> Browse Listings
-                    </a>
-                    <a href="#" class="btn btn-outline-primary">
-                        <i class="bi bi-card-list"></i> My Listings
-                    </a>
-                </div>
-    
-                <!-- Right Image -->
-                <div class="col-md-6 text-center">
-                    <div class="glass-card p-3 rounded-4 shadow">
-                        <img src="/assets/images/post-a-listing-hero.png" alt="Post Listing" class="img-fluid hero-image">
+                    <div class="d-flex gap-3 flex-wrap justify-content-center justify-content-md-start">
+                        <a href="/pages/browse-listings.html" class="btn btn-light btn-lg">
+                            <i class="fas fa-search me-2"></i>Browse More
+                        </a>
+                        <a href="/pages/myListing.html" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-plus me-2"></i>My Listing
+                        </a>
                     </div>
                 </div>
-    
+                <div class="col-md-6 text-center fade-in">
+                    <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&h=400&fit=crop"
+                        alt="Booking Management" class="img-fluid hero-image">
+                </div>
             </div>
         </div>
     </section>
-
-    <div id="sidebar">
-        <span class="close-btn" id="closeSidebar">&times;</span>
-        <h5 class="text-center mt-3">Profile</h5>
-        <hr class="bg-light">
-        <a href="#">View Profile</a>
-        <a href="#">Edit Profile</a>
-        <a href="#">Settings</a>
-        <button class="btn logout-btn w-100 mt-3">Logout</button>
-    </div>
-
     
     <!-- Glass Effect CSS -->
-    
 
 
     <!-- Listings as Cards -->
     <div class="container mt-5 mb-5">
-        <h3 class="mb-4">Your Active Listings</h3>
-        <div class="row g-4">
-            <!-- Listing Card Example -->
-            <div class="col-md-4">
-                <div class="card listing-card">
-                    <img src="https://earlyexperts.net/wp-content/uploads/2018/12/91dgNPGhBeL._SL1500_.jpg"
-                        class="card-img-top" alt="Listing">
-                    <div class="card-body">
-                        <h5 class="card-title">Lawn Mower</h5>
-                        <p class="text-muted mb-1">Colombo</p>
-                        <p><span class="badge bg-info">2025-08-20 → 2025-08-25</span></p>
-                        <p><strong>Bookings:</strong> <span class="badge bg-secondary">3</span></p>
-                        <div class="card-actions">
-                            <i class="bi bi-pencil-square text-warning action-icon" data-bs-toggle="modal" data-bs-target="#editListingModal"></i>
-                            <i class="bi bi-trash text-danger action-icon"></i>
+        <h3 class="mb-4">Your Active Skills</h3>
+        <div class="row g-4" id="listingsContainer">
+            <!-- Listings will be appended here -->
+        </div>
+    </div>
+
+    <div class="container mt-5 mb-5">
+        <h3 class="mb-4">Your Active Tools</h3>
+        <div class="row g-4" id="toolsContainer">
+            <!-- Tools will be appended here -->
+        </div>
+    </div>
+
+    <!-- Enhanced Skill Requests Modal -->
+    <div class="modal fade" id="skillRequestsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header gradient-header skill-gradient">
+                    <div class="d-flex align-items-center">
+                        <div class="modal-icon-wrapper me-3">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <div>
+                            <h4 class="modal-title mb-0">Skill Requests</h4>
+                            <small class="opacity-75">Manage incoming skill requests</small>
                         </div>
                     </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
-            </div>
-
-            <!-- Another Example -->
-            <div class="col-md-4">
-                <div class="card listing-card">
-                    <img src="https://images.unsplash.com/photo-1581092160562-40aa09a2a7f6" class="card-img-top"
-                        alt="Listing">
-                    <div class="card-body">
-                        <h5 class="card-title">Power Drill</h5>
-                        <p class="text-muted mb-1">Kandy</p>
-                        <p><span class="badge bg-success">2025-08-21 (10:00 - 14:00)</span></p>
-                        <p><strong>Bookings:</strong> <span class="badge bg-secondary">1</span></p>
-                        <div class="card-actions">
-                            <i class="bi bi-pencil-square text-warning action-icon" data-bs-toggle="modal" data-bs-target="#editListingModal"></i>
-                            <i class="bi bi-trash text-danger action-icon"></i>
+                <div class="modal-body p-0">
+                    <div class="requests-container">
+                        <div class="requests-header p-4 bg-light">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <h6 class="mb-1">Incoming Requests</h6>
+                                    <small class="text-muted">Review and respond to skill requests from other users</small>
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <div class="filter-buttons">
+                                        <button class="btn btn-sm btn-outline-primary active" data-filter="all">All</button>
+                                        <button class="btn btn-sm btn-outline-warning"
+                                            data-filter="pending">Pending</button>
+                                        <button class="btn btn-sm btn-outline-success"
+                                            data-filter="accepted">Accepted</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="skillRequestsContainer" class="requests-list">
+                            <!-- Loading state -->
+                            <div class="loading-state text-center py-5">
+                                <div class="spinner-border text-primary mb-3" role="status"></div>
+                                <p class="text-muted">Loading skill requests...</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
+    <!-- Enhanced Tool Requests Modal -->
+    <div class="modal fade" id="toolRequestsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header gradient-header tool-gradient">
+                    <div class="d-flex align-items-center">
+                        <div class="modal-icon-wrapper me-3">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <div class="tittle">
+                            <h4 class="modal-title mb-0">Tool Requests</h4>
+                            <small class="opacity-75">Manage incoming tool rental requests</small>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="requests-container">
+                        <div class="requests-header p-4 bg-light">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <h6 class="mb-1">Incoming Requests</h6>
+                                    <small class="text-muted">Review and respond to tool rental requests from other
+                                        users</small>
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <div class="filter-buttons">
+                                        <button class="btn btn-sm btn-outline-primary active" data-filter="all">All</button>
+                                        <button class="btn btn-sm btn-outline-warning"
+                                            data-filter="pending">Pending</button>
+                                        <button class="btn btn-sm btn-outline-success"
+                                            data-filter="accepted">Accepted</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="toolRequestsContainer" class="requests-list">
+                            <!-- Loading state -->
+                            <div class="loading-state text-center py-5">
+                                <div class="spinner-border text-success mb-3" role="status"></div>
+                                <p class="text-muted">Loading tool requests...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Request Details Modal -->
+    <div class="modal fade" id="requestDetailsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="requestModalTitle">Request Details</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <img id="requesterImage" src="" class="rounded-circle me-3" width="50" height="50" alt="User Image">
+                        <div>
+                            <h6 id="requesterName" class="mb-0"></h6>
+                            <small id="requesterEmail" class="text-muted"></small>
+                        </div>
+                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item"><strong>Type:</strong> <span id="requestType"></span></li>
+                        <li class="list-group-item"><strong>Message:</strong> <span id="requestMessage"></span></li>
+                        <li class="list-group-item"><strong>Dates:</strong> <span id="requestDates"></span></li>
+                        <li class="list-group-item"><strong>Price:</strong> $<span id="requestPrice"></span></li>
+                        <li class="list-group-item"><strong>Status:</strong>
+                            <span id="requestStatus" class="badge bg-secondary"></span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button id="acceptRequestBtn" class="btn btn-success">Accept</button>
+                    <button id="rejectRequestBtn" class="btn btn-danger">Reject</button>
+                    <button id="maybeLaterBtn" class="btn btn-info">Maybe Later</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
 
     <!-- Edit Listing Modal -->
     <div class="modal fade" id="editListingModal" tabindex="-1" aria-labelledby="editListingModalLabel" aria-hidden="true">
@@ -266,7 +421,7 @@
         </div>
     </div>
 
-
+    
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
@@ -309,7 +464,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.all.min.js"></script>
     <script src="/js/user-dashboard.js"></script>
-    <script src="/js/post-a-listing.js"></script>
+    <script src="/js/myListing.js"></script>
 
 
     <!-- Bootstrap icons for edit/delete -->

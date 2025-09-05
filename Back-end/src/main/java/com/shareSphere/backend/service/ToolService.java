@@ -1,6 +1,7 @@
 package com.shareSphere.backend.service;
 
 import com.shareSphere.backend.dto.PricingDto;
+import com.shareSphere.backend.dto.SkillDto;
 import com.shareSphere.backend.dto.ToolDto;
 import com.shareSphere.backend.entity.Pricing;
 import com.shareSphere.backend.entity.Skill;
@@ -168,5 +169,60 @@ public class ToolService {
 
         toolRepository.delete(tool);
         return "Tool deleted successfully!";
+    }
+
+    public List<ToolDto> getAllSkills() {
+        List<Tool> tools = toolRepository.findAll();
+        return tools.stream()
+                .map(tool -> {
+                    Pricing pricing = pricingRepository.findByToolId(tool.getToolId())
+                            .orElseThrow(() -> new RuntimeException("No pricing found for skillId: " + tool.getToolId()));
+
+                    return ToolDto.builder()
+                            .toolId(tool.getToolId())
+                            .userId(tool.getUser().getId())
+                            .name(tool.getName())
+                            .description(tool.getDescription())
+                            .availabilityStatus(tool.getAvailabilityStatus())
+                            .createdAt(tool.getCreatedAt())
+                            .startDate(tool.getStartDate())
+                            .endDate(tool.getEndDate())
+                            .imageUrls(tool.getImageUrls())
+                            .condition(tool.getCondition())
+                            .country(tool.getCountry())
+                            .state(tool.getState())
+                            .pricingId(pricing.getPricingId())
+                            .priceType(pricing.getPriceType())
+                            .price(pricing.getPrice())
+                            .build();
+                })
+                .collect(Collectors.toList());
+
+    }
+
+    public ToolDto getToolByToolId(String toolId) {
+        Tool tool = toolRepository.findById(Long.valueOf(toolId))
+                .orElseThrow(() -> new RuntimeException("Tool not found with id: " + toolId));
+
+        Pricing pricing = pricingRepository.findByToolId(tool.getToolId())
+                .orElseThrow(() -> new RuntimeException("No pricing found for toolId: " + toolId));
+
+        return ToolDto.builder()
+                .toolId(tool.getToolId())
+                .userId(tool.getUser().getId())
+                .name(tool.getName())
+                .description(tool.getDescription())
+                .availabilityStatus(tool.getAvailabilityStatus())
+                .createdAt(tool.getCreatedAt())
+                .startDate(tool.getStartDate())
+                .endDate(tool.getEndDate())
+                .imageUrls(tool.getImageUrls())
+                .condition(tool.getCondition())
+                .country(tool.getCountry())
+                .state(tool.getState())
+                .pricingId(pricing.getPricingId())
+                .priceType(pricing.getPriceType())
+                .price(pricing.getPrice())
+                .build();
     }
 }

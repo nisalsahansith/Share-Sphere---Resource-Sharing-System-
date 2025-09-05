@@ -100,7 +100,7 @@ $(document).ready(function () {
         });
 
         $.ajax({
-            url: "http://localhost:8080/user/createlisting",
+            url: "http://localhost:8080/postlisting/createlisting",
             type: "POST",
             data: formData,
             processData: false,

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings - ShareSphere</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/basic-css.css">
+    <link rel="stylesheet" href="/css/myRequests.css">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+</head>
+
+<body>
+    <!-- Enhanced Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container-fluid">
+            <button class="btn btn-outline-light me-3" id="openSidebar">
+                <i class="fas fa-bars"></i>
+            </button>
+            <a class="navbar-brand" href="/pages/user-dashboard.html">ShareSphere</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/pages/browse-listings.html">
+                            <i class="fas fa-search me-1"></i>Browse
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pages/post-a-listing.html">
+                            <i class="fas fa-plus me-1"></i>Post Listing
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pages/myListing.html">
+                            <i class="fas fa-list me-1"></i>My Listings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pages/my-bookings.html">
+                            <i class="fas fa-calendar me-1"></i>My Bookings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pages/my-requests.html">
+                            <i class="fas fa-clipboard-list me-1"></i>My Requests
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pages/messages.html">
+                            <i class="fas fa-comments me-1"></i>Messages
+                        </a>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search listings..." aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fas fa-bars text-primary"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Enhanced Sidebar -->
+    <div id="sidebar">
+        <button class="close-btn" id="closeSidebar">
+            <i class="fas fa-times"></i>
+        </button>
+        <h5 class="text-center mt-3 mb-4">
+            <i class="fas fa-user-circle me-2"></i>Profile
+        </h5>
+        <hr class="mx-3 mb-4">
+        <a href="#" class="sidebar-link">
+            <i class="fas fa-user me-2"></i>View Profile
+        </a>
+        <a href="#" class="sidebar-link">
+            <i class="fas fa-edit me-2"></i>Edit Profile
+        </a>
+        <a href="#" class="sidebar-link">
+            <i class="fas fa-cog me-2"></i>Settings
+        </a>
+        <a href="#" class="sidebar-link">
+            <i class="fas fa-bell me-2"></i>Notifications
+        </a>
+        <a href="#" class="sidebar-link">
+            <i class="fas fa-question-circle me-2"></i>Help & Support
+        </a>
+        <button class="btn logout-btn w-auto">
+            <i class="fas fa-sign-out-alt me-2"></i>Logout
+        </button>
+    </div>
+
+    
+    <!-- Enhanced Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-4 mb-md-0 fade-in">
+                    <h1 class="fw-bold mb-3">Your Requests</h1>
+                    <p class="mb-4">
+                        Track and manage all your current and past Request easily. Stay updated with real-time status and
+                        never miss an opportunity.
+                    </p>
+                    <div class="d-flex gap-3 flex-wrap justify-content-center justify-content-md-start">
+                        <a href="/pages/browse-listings.html" class="btn btn-light btn-lg">
+                            <i class="fas fa-search me-2"></i>Browse More
+                        </a>
+                        <a href="/pages/myListing.html" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-plus me-2"></i>Create Listing
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 text-center fade-in">
+                    <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&h=400&fit=crop"
+                        alt="Booking Management" class="img-fluid hero-image">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="container">
+        <div class="filter-section">
+            <div class="filter-tabs">
+                <button class="filter-tab active" data-filter="all" onclick="filterBookings('all')">
+                    <i class="fas fa-list"></i>All Requests <span class="badge bg-white text-primary ms-1">4</span>
+                </button>
+                <button class="filter-tab" data-filter="active" onclick="filterBookings('active')">
+                    <i class="fas fa-clock"></i>Active <span class="badge bg-white text-warning ms-1">2</span>
+                </button>
+                <button class="filter-tab" data-filter="completed" onclick="filterBookings('completed')">
+                    <i class="fas fa-check-circle"></i>Completed <span class="badge bg-white text-success ms-1">1</span>
+                </button>
+                <button class="filter-tab" data-filter="cancelled" onclick="filterBookings('cancelled')">
+                    <i class="fas fa-times-circle"></i>Cancelled <span class="badge bg-white text-danger ms-1">1</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Skill Bookings Container -->
+    <div class="container mb-5">
+        <div class="row g-4" id="skillBookingsContainer">
+            <!-- Skill bookings will be dynamically appended here -->
+        </div>
+        <div class="row g-4" id="toolBookingsContainer">
+            <!-- Skill bookings will be dynamically appended here -->
+        </div>
+    
+        <!-- Empty State -->
+        <div class="empty-state" id="skillEmptyState" style="display: none;">
+            <i class="fas fa-calendar-times"></i>
+            <h4>No skill bookings found</h4>
+            <p>Try adjusting your filter or book a new item to get started.</p>
+            <button class="btn btn-primary" onclick="window.location.href='/browse'">
+                <i class="fas fa-plus me-2"></i>Browse Items
+            </button>
+        </div>
+    </div>
+
+<!--     
+    <!-- Enhanced Bookings Section --
+    <div class="container mb-5">
+        <div class="row g-4" id="bookingsContainer">
+    
+            <!-- Active Booking 1 --
+            <div class="col-lg-4 col-md-6 booking-item fade-in" data-status="confirmed">
+                <div class="card booking-card">
+                    <div class="status-indicator status-confirmed">Confirmed</div>
+                    <img src="https://images.unsplash.com/photo-1503602642458-232111445657?w=400&h=200&fit=crop"
+                        class="card-img-top" alt="Professional Camera">
+                    <div class="card-body">
+                        <h5 class="card-title">Professional Camera Kit</h5>
+                        <p class="location-text">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Galle, Southern Province
+                        </p>
+                        <div class="date-badge">
+                            <i class="fas fa-calendar"></i>Aug 22 - 25, 2025
+                        </div>
+                        <div class="price-display">
+                            <i class="fas fa-dollar-sign"></i>$120.00 Total
+                        </div>
+                        <div class="action-buttons">
+                            <button class="btn-action btn-primary-action" onclick="openBookingModal('booking1')">
+                                <i class="fas fa-eye"></i>View Details
+                            </button>
+                            <div class="action-icon icon-message" onclick="openChat('booking1')" title="Message Owner">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <div class="action-icon icon-cancel" onclick="showCancelConfirm('booking1')"
+                                title="Cancel Booking">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Active Booking 2 ->
+            <div class="col-lg-4 col-md-6 booking-item fade-in" data-status="pending">
+                <div class="card booking-card">
+                    <div class="status-indicator status-pending">Pending</div>
+                    <img src="https://images.unsplash.com/photo-1544191696-15693072e82a?w=400&h=200&fit=crop"
+                        class="card-img-top" alt="Mountain Bike">
+                    <div class="card-body">
+                        <h5 class="card-title">Mountain Bike Adventure</h5>
+                        <p class="location-text">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Nuwara Eliya, Central Province
+                        </p>
+                        <div class="date-badge">
+                            <i class="fas fa-clock"></i>Aug 28, 2025 (09:00-17:00)
+                        </div>
+                        <div class="price-display">
+                            <i class="fas fa-dollar-sign"></i>$45.00 Total
+                        </div>
+                        <div class="action-buttons">
+                            <button class="btn-action btn-primary-action" onclick="openBookingModal('booking2')">
+                                <i class="fas fa-eye"></i>View Details
+                            </button>
+                            <div class="action-icon icon-message" onclick="openChat('booking2')" title="Message Owner">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <div class="action-icon icon-cancel" onclick="showCancelConfirm('booking2')"
+                                title="Cancel Booking">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Completed Booking ->
+            <div class="col-lg-4 col-md-6 booking-item fade-in" data-status="completed">
+                <div class="card booking-card">
+                    <div class="status-indicator status-completed">Completed</div>
+                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=200&fit=crop"
+                        class="card-img-top" alt="Guitar">
+                    <div class="card-body">
+                        <h5 class="card-title">Acoustic Guitar</h5>
+                        <p class="location-text">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Colombo, Western Province
+                        </p>
+                        <div class="date-badge">
+                            <i class="fas fa-check"></i>Jul 15 - 20, 2025
+                        </div>
+                        <div class="price-display">
+                            <i class="fas fa-dollar-sign"></i>$75.00 Total
+                        </div>
+                        <div class="action-buttons">
+                            <button class="btn-action btn-outline-action" onclick="openBookingModal('booking3')">
+                                <i class="fas fa-eye"></i>View Details
+                            </button>
+                            <div class="action-icon icon-complete" onclick="showRatingModal('booking3')"
+                                title="Rate Experience">
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Cancelled Booking --
+            <div class="col-lg-4 col-md-6 booking-item fade-in" data-status="cancelled">
+                <div class="card booking-card">
+                    <div class="status-indicator status-cancelled">Cancelled</div>
+                    <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400&h=200&fit=crop"
+                        class="card-img-top" alt="Projector">
+                    <div class="card-body">
+                        <h5 class="card-title">HD Projector</h5>
+                        <p class="location-text">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Kandy, Central Province
+                        </p>
+                        <div class="date-badge">
+                            <i class="fas fa-times"></i>Aug 10 - 12, 2025
+                        </div>
+                        <div class="price-display">
+                            <i class="fas fa-undo"></i>$90.00 Refunded
+                        </div>
+                        <div class="action-buttons">
+                            <button class="btn-action btn-outline-action" onclick="openBookingModal('booking4')">
+                                <i class="fas fa-eye"></i>View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Empty State --
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <i class="fas fa-calendar-times"></i>
+            <h4>No bookings found</h4>
+            <p>Try adjusting your filter or book a new item to get started.</p>
+            <button class="btn btn-primary" onclick="window.location.href='/browse'">
+                <i class="fas fa-plus me-2"></i>Browse Items
+            </button>
+        </div>
+    </div> -->
+    
+    <!-- Enhanced Booking Details Modals --
+    <div class="modal fade" id="bookingModal1" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-camera me-2"></i>Camera Rental Details
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong><i class="fas fa-calendar me-2"></i>Start Date:</strong> August 22, 2025</p>
+                            <p><strong><i class="fas fa-calendar me-2"></i>End Date:</strong> August 25, 2025</p>
+                            <p><strong><i class="fas fa-clock me-2"></i>Duration:</strong> 4 Days</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong><i class="fas fa-dollar-sign me-2"></i>Total Amount:</strong> $120.00</p>
+                            <p><strong><i class="fas fa-info-circle me-2"></i>Status:</strong> <span
+                                    class="badge bg-success">Confirmed</span></p>
+                            <p><strong><i class="fas fa-user me-2"></i>Owner:</strong> John Photography</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-primary" onclick="openChat('booking1')">
+                        <i class="fas fa-comments me-2"></i>Message Owner
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-about">
+                <h3>ShareSphere</h3>
+                <p>ShareSphere is your go-to platform for renting and lending items safely and easily. Connect, share,
+                    and save today!</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Browse Listings</a></li>
+                    <li><a href="#">Post an Item</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Contact Us</h4>
+                <p>Email: support@sharesphere.com</p>
+                <p>Phone: +94 71 234 5678</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 ShareSphere. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.all.min.js"></script>
+    <script src="/js/user-dashboard.js"></script>
+    <script src="/js/myRequest.js"></script>
+        
+
+</body>
+
+</html>

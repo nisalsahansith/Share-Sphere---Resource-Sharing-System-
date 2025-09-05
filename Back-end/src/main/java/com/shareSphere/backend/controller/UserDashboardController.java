@@ -7,6 +7,7 @@ import com.shareSphere.backend.dto.ToolDto;
 import com.shareSphere.backend.entity.Skill;
 import com.shareSphere.backend.entity.Tool;
 import com.shareSphere.backend.service.SkillService;
+import com.shareSphere.backend.service.ToolRequestService;
 import com.shareSphere.backend.service.ToolService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -25,60 +27,53 @@ import java.util.UUID;
 public class UserDashboardController {
     private final SkillService skillService;
     private final ToolService toolService;
+    private final ToolRequestService toolRequestService;
 
-    @PostMapping("/createlisting")
+    @GetMapping("/getallskills")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<APIResponse> postASkill(
-            @RequestParam("name") String name,
-            @RequestParam("description") String description,
-            @RequestParam("availability") String availability,
-            @RequestParam("userId") String userId,
-            @RequestParam("startDate") String startDate,
-            @RequestParam("endDate") String endDate,
-            @RequestParam("priceType") String priceType,
-            @RequestParam("price") Double price,
-            @RequestParam("listingType") String listingType,
-            @RequestParam("condition") String condition,
-            @RequestParam("country") String country,
-            @RequestParam("state") String state,
-            @RequestParam("images") MultipartFile[] images) {
-        if ("SKILL".equalsIgnoreCase(listingType)) {
-            SkillDto skillDto = new SkillDto();
-            skillDto.setName(name);
-            skillDto.setDescription(description);
-            skillDto.setAvailability(Skill.Availability.valueOf(availability));
-            skillDto.setUserId(userId);
-            skillDto.setCreatedAt(LocalDateTime.now());
-            skillDto.setStartDate(LocalDate.parse(startDate));
-            skillDto.setEndDate(LocalDate.parse(endDate));
-
-            PricingDto pricingDto = new PricingDto();
-            pricingDto.setPriceType(priceType.toUpperCase());
-            pricingDto.setPrice(price);
-            String message = skillService.postASkill(skillDto, images,pricingDto);
-            return ResponseEntity.ok(new APIResponse(200, "ok", message));
-        }else if ("TOOL".equalsIgnoreCase(listingType)) {
-            ToolDto toolDto = new ToolDto();
-            toolDto.setName(name);
-            toolDto.setDescription(description);
-            toolDto.setAvailabilityStatus(Tool.AvailabilityStatus.valueOf(availability));
-            toolDto.setUserId(userId);
-            toolDto.setCondition(condition);
-            toolDto.setCountry(country);
-            toolDto.setState(state);
-            toolDto.setStartDate(LocalDate.parse(startDate));
-            toolDto.setEndDate(LocalDate.parse(endDate));
-            toolDto.setCreatedAt(LocalDateTime.now());
-
-            PricingDto pricingDto = new PricingDto();
-            pricingDto.setPriceType(priceType.toUpperCase());
-            pricingDto.setPrice(price);
-
-            String message = toolService.postATool(toolDto, images,pricingDto);
-            return ResponseEntity.ok(new APIResponse(200, "ok", message));
-        } else {
-            return ResponseEntity.badRequest().body(new APIResponse(400, "Bad Request", "Invalid listing type"));
+    public ResponseEntity<APIResponse> getAllSkills() {
+        List<SkillDto> skills = skillService.getAllSkills();
+        if (skills.isEmpty()) {
+            return ResponseEntity.ok(new APIResponse(200, "ok", "No skills found"));
         }
+        return ResponseEntity.ok(new APIResponse(200, "ok", skills));
+    }
+
+    @GetMapping("/getalltools")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<APIResponse> getAllTools() {
+        List<ToolDto> tools = toolService.getAllSkills();
+        if (tools.isEmpty()) {
+            return ResponseEntity.ok(new APIResponse(200, "ok", "No skills found"));
+        }
+        return ResponseEntity.ok(new APIResponse(200, "ok", tools));
+    }
+
+    @GetMapping("/getaskill")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<APIResponse> getASkill(@RequestParam String skillId) {
+        SkillDto skills = skillService.getSkillBySkillId(skillId);
+        if (skills == null) {
+            return ResponseEntity.ok(new APIResponse(200, "ok", "No skills found"));
+        }
+        return ResponseEntity.ok(new APIResponse(200, "ok", skills));
+    }
+
+    @GetMapping("/getatool")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<APIResponse> getATool(@RequestParam String toolId) {
+        ToolDto tools = toolService.getToolByToolId(toolId);
+        if (tools == null) {
+            return ResponseEntity.ok(new APIResponse(200, "ok", "No skills found"));
+        }
+        return ResponseEntity.ok(new APIResponse(200, "ok", tools));
+    }
+
+    @GetMapping("/gettoolbookeddays")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<APIResponse> getToolBookedDays(@RequestParam String toolId) {
+        List<LocalDate> bookedDays = toolRequestService.getBookedDays(toolId);
+        return ResponseEntity.ok(new APIResponse(200, "ok", bookedDays));
     }
 
 }

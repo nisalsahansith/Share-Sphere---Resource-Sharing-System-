@@ -4,174 +4,253 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard</title>
+    <title>User Dashboard - ShareSphere</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/user-dashboard.css">
-    <!-- SweetAlert2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css" rel="stylesheet">
-        
-    <!-- Optional: Animate.css for animations -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
-    
-    <!-- Optional: Font Awesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/basic-css.css">
+    <link rel="stylesheet" href="/css/user-dashboard.css">
 </head>
-
-<body>
-
-    <!-- Navbar -->
+    <body>
+    <!-- Enhanced Navbar -->
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container-fluid">
-            <button class="btn btn-outline-light me-3" id="openSidebar">☰</button>
-            <a class="navbar-brand" href="/pages/user-dashboard.html">Share Sphere</a>
-            <div class="collapse navbar-collapse">
+            <button class="btn btn-outline-light me-3" id="openSidebar">
+                <i class="fas fa-bars"></i>
+            </button>
+            <a class="navbar-brand" href="/pages/user-dashboard.html">ShareSphere</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link" href="/pages/browse-listings.html">Browse</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/pages/post-a-listing.html">Post a Listing</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/pages/myListing.html">My Listings</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/pages/my-bookings.html">My Bookings
-                    <li class="nav-item"><a class="nav-link" href="/pages/messages.html">Messages</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/pages/browse-listings.html">
+                            <i class="fas fa-search me-1"></i>Browse
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pages/post-a-listing.html">
+                            <i class="fas fa-plus me-1"></i>Post Listing
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pages/myListing.html">
+                            <i class="fas fa-list me-1"></i>My Listings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pages/my-bookings.html">
+                            <i class="fas fa-calendar me-1"></i>My Bookings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pages/my-requests.html">
+                            <i class="fas fa-clipboard-list me-1"></i>My Requests
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/pages/messages.html">
+                            <i class="fas fa-comments me-1"></i>Messages
+                        </a>
+                    </li>
                 </ul>
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search listings..." aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <button class="btn btn-outline-success" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
                 </form>
             </div>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fas fa-bars text-primary"></i>
+            </button>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero-section ">
+    <!-- Enhanced Hero Section -->
+    <section class="hero-section">
         <div class="container">
             <div class="row align-items-center">
-                <!-- Left Content -->
-                <div class="col-md-6 text-center text-md-start mb-4 mb-md-0">
-                    <h1 class="fw-bold mb-3">Welcome to Share Sphere</h1>
-                    <p class="text-muted mb-4">
-                        Easily rent, lend, and share items within your community.
-                        Find what you need or earn by listing your own items.
+                <div class="col-md-6 text-center text-md-start mb-4 mb-md-0 animate-fade-in">
+                    <h1 class="fw-bold mb-3">Welcome to ShareSphere</h1>
+                    <p class="mb-4">
+                        Connect with your community to share skills, tools, and resources.
+                        Build trust, earn income, and make a positive impact together.
                     </p>
-                    <a href="#" class="btn btn-primary me-2">Browse Listings</a>
-                    <a href="/pages/post-a-listing.html" class="btn btn-outline-primary">Post a Listing</a>
+                    <div class="d-flex gap-3 flex-wrap justify-content-center justify-content-md-start">
+                        <a href="/pages/browse-listings.html" class="btn btn-primary">
+                            <i class="fas fa-search me-2"></i>Browse Listings
+                        </a>
+                        <a href="/pages/post-a-listing.html" class="btn btn-outline-primary">
+                            <i class="fas fa-plus me-2"></i>Post a Listing
+                        </a>
+                    </div>
                 </div>
-    
-                <!-- Right Image -->
-                <div class="col-md-6 text-center">
-                    <img src="/assets/images/herosection.webp" alt="Sharing Items" class="img-fluid hero-image">
+                <div class="col-md-6 text-center animate-fade-in">
+                    <img src="/assets/images/herosection.webp" alt="Community Sharing" class="img-fluid hero-image">
                 </div>
             </div>
         </div>
     </section>
 
-
-
-
-    <!-- Sidebar -->
+    <!-- Enhanced Sidebar -->
     <div id="sidebar">
-        <span class="close-btn" id="closeSidebar">&times;</span>
-        <h5 class="text-center mt-3">Profile</h5>
-        <hr class="bg-light">
-        <a href="#">View Profile</a>
-        <a href="#">Edit Profile</a>
-        <a href="#">Settings</a>
-        <button class="btn logout-btn w-100 mt-3">Logout</button>
-    </div>  
+        <button class="close-btn" id="closeSidebar">
+            <i class="fas fa-times"></i>
+        </button>
+        <h5 class="text-center mt-3 mb-4">
+            <i class="fas fa-user-circle me-2"></i>Profile
+        </h5>
+        <hr class="mx-3 mb-4">
+        <a href="#" class="sidebar-link">
+            <i class="fas fa-user me-2"></i>View Profile
+        </a>
+        <a href="#" class="sidebar-link">
+            <i class="fas fa-edit me-2"></i>Edit Profile
+        </a>
+        <a href="#" class="sidebar-link">
+            <i class="fas fa-cog me-2"></i>Settings
+        </a>
+        <a href="#" class="sidebar-link">
+            <i class="fas fa-bell me-2"></i>Notifications
+        </a>
+        <a href="#" class="sidebar-link">
+            <i class="fas fa-question-circle me-2"></i>Help & Support
+        </a>
+        <button class="btn logout-btn w-auto">
+            <i class="fas fa-sign-out-alt me-2"></i>Logout
+        </button>
+    </div>
 
+    <!-- Quick Stats Section
+    <div class="container stats-section">
+        <div class="stats-grid animate-fade-in">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-list"></i>
+                </div>
+                <div class="stat-number">12</div>
+                <div class="stat-label">Your Listings</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="stat-number">8</div>
+                <div class="stat-label">Active Bookings</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-number">4.9</div>
+                <div class="stat-label">Your Rating</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <div class="stat-number">$247</div>
+                <div class="stat-label">Earnings</div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Skills Section -->
     <div class="container mt-4">
-        <h3 class="mb-4">Browse Listings</h3>
-        <div class="d-flex flex-wrap gap-3">
-    
-            <!-- Listing 1 -->
-            <div class="card listing-card" style="width: 250px;">
-                <img src="https://earlyexperts.net/wp-content/uploads/2018/12/91dgNPGhBeL._SL1500_.jpg" class="card-img-top"
-                    alt="Listing">
-                <div class="card-body">
-                    <h5 class="card-title">Lawn Mower</h5>
-                    <p class="card-text">Available for rent</p>
-                    <p class="fw-bold">$5/hour | $30/day</p>
-                    <button class="btn btn-primary btn-sm view-btn" data-bs-toggle="modal" data-bs-target="#listingModal"
-                        data-title="Lawn Mower" data-pricehour="5" data-priceday="30"
-                        data-description="Powerful lawn mower in excellent condition, perfect for garden maintenance."
-                        data-conditions="Must return cleaned. Fuel not included."
-                        data-image="https://earlyexperts.net/wp-content/uploads/2018/12/91dgNPGhBeL._SL1500_.jpg">
-                        View
-                    </button>
-                </div>
+        <h3 class="mb-4">
+            <i class="fas fa-user-graduate me-2"></i>Browse Skills
+        </h3>
+        <div id="skillsContainer" class="d-flex flex-wrap gap-3">
+            <!-- Loading placeholder -->
+            <div class="loading-placeholder animate-fade-in">
+                <div class="spinner"></div>
+                <p>Loading skills...</p>
             </div>
-    
-            <!-- Listing 2 -->
-            <div class="card listing-card" style="width: 250px;">
-                <img src="https://th.bing.com/th/id/R.735c376ec0aba3d156db92300e05e813?rik=GhuYxDQkHp%2baMw&pid=ImgRaw&r=0"
-                    class="card-img-top" alt="Listing">
-                <div class="card-body">
-                    <h5 class="card-title">Electric Drill</h5>
-                    <p class="card-text">Available for rent</p>
-                    <p class="fw-bold">$3/hour | $20/day</p>
-                    <button class="btn btn-primary btn-sm view-btn" id="view-btn" data-bs-toggle="modal" data-bs-target="#listingModal"
-                        data-title="Electric Drill" data-pricehour="3" data-priceday="20"
-                        data-description="High-performance drill with multiple bits. Ideal for wood, metal, and masonry."
-                        data-conditions="Return with all accessories. Damage fees apply."
-                        data-image="https://th.bing.com/th/id/R.735c376ec0aba3d156db92300e05e813?rik=GhuYxDQkHp%2baMw&pid=ImgRaw&r=0">
-                        View
-                    </button>
-                </div>
-            </div>
-    
         </div>
     </div>
-    
-    <!-- View Modal -->
-    <div class="modal fade" id="listingModal" tabindex="-1" aria-labelledby="listingModalLabel" aria-hidden="true">
+
+    <!-- Tools & Items Section -->
+    <div class="container mt-5">
+        <h3 class="mb-4">
+            <i class="fas fa-tools me-2"></i>Browse Tools & Items
+        </h3>
+        <div id="listingContainer" class="d-flex flex-wrap gap-3">
+            <!-- Loading placeholder -->
+            <div class="loading-placeholder animate-fade-in">
+                <div class="spinner"></div>
+                <p>Loading listings...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced Modals (keeping original structure) -->
+<div class="modal fade" id="listingModal" data-listing-type="" data-listing-id=""
+    data-user-id="" tabindex="-1" aria-labelledby="listingModalLabel"
+    aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="listingModalLabel">Listing Details</h5>
+                    <h5 class="modal-title" id="listingModalLabel">
+                        <i class="fas fa-info-circle me-2"></i>Listing Details
+                    </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" id="modalCloseBtn"
                         aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <img id="modalImage" class="img-fluid mb-3" src="" alt="Listing Image" />
+                    <!-- Image Carousel -->
+                    <div id="modalCarousel" class="carousel slide mb-3" data-bs-ride="carousel">
+                        <div class="carousel-inner" id="modalCarouselInner"></div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#modalCarousel"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#modalCarousel"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </button>
+                    </div>
+    
                     <h5 id="modalTitle"></h5>
                     <p id="modalDescription"></p>
-                    <p><strong>Condition:</strong> <span id="modalCondition"></span></p>
-                    <p><strong>Price per Hour:</strong> $<span id="modalPriceHour"></span></p>
-                    <p><strong>Price per Day:</strong> $<span id="modalPriceDay"></span></p>
+                    <p id="modalConditionRow"><strong>Condition:</strong> <span id="modalCondition"></span></p>
+                    <p><strong>Price:</strong> $<span id="modalPrice"></span> <span id="modalPriceType"></span></p>
     
                     <hr />
     
-                    <h6>Book this item</h6>
+                    <h6><i class="fas fa-calendar-plus me-2"></i>Book this item</h6>
                     <form id="bookingForm">
-                        <div class="mb-3 row">
-                            <label for="bookingHours" class="col-sm-4 col-form-label">Number of hours:</label>
-                            <div class="col-sm-8">
-                                <input type="number" min="0" step="1" class="form-control" id="bookingHours"
-                                    placeholder="0" />
-                            </div>
+                        <div class="mb-3" id="bookingDateContainer">
+                            <label for="bookingDate" class="form-label">Select Date:</label>
+                            <input type="date" class="form-control" id="bookingDate" />
                         </div>
     
-                        <div class="mb-3 row">
-                            <label for="bookingDays" class="col-sm-4 col-form-label">Number of days:</label>
-                            <div class="col-sm-8">
-                                <input type="number" min="0" step="1" class="form-control" id="bookingDays"
-                                    placeholder="0" />
-                            </div>
+                        <div class="mb-3">
+                            <label for="bookingMessage" class="form-label">Message:</label>
+                            <textarea class="form-control" id="bookingMessage" rows="3"
+                                placeholder="Write a message to the owner..."></textarea>
                         </div>
     
                         <div class="mb-3">
                             <label>Available Days & Times:</label>
                             <ul id="availableTimes" class="list-group list-group-flush"
                                 style="max-height:150px; overflow-y:auto;">
-                                <!-- dynamically populated list -->
+                                <!-- dynamically populated -->
                             </ul>
-                        </div>    
-                        <button type="submit" class="btn btn-success w-100">Book Now</button>
+                        </div>
+    
+                        <button type="submit" class="btn btn-success w-100">
+                            <i class="fas fa-check me-2"></i>Book Now
+                        </button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Payment Modal -->
+    
+
+    <!-- Payment Modal
     <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md">
             <div class="modal-content">
@@ -182,7 +261,7 @@
     
                 <div class="modal-body">
                     <form id="paymentForm">
-                        <!-- Payment Method -->
+                        < Payment Method --
                         <div class="mb-3">
                             <label class="form-label">Payment Method</label>
                             <select class="form-select" id="paymentMethod" required>
@@ -193,7 +272,7 @@
                             </select>
                         </div>
     
-                        <!-- Card Details -->
+                         Card Details ->
                         <div id="cardDetails" style="display:none;">
                             <div class="mb-3">
                                 <label for="cardNumber" class="form-label">Card Number</label>
@@ -217,7 +296,7 @@
             </div>
         </div>
     </div>
-
+ -->
 
     <footer class="footer">
         <div class="footer-container">

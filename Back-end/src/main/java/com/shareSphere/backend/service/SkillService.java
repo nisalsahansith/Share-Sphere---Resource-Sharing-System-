@@ -4,7 +4,6 @@ import com.shareSphere.backend.dto.PricingDto;
 import com.shareSphere.backend.dto.SkillDto;
 import com.shareSphere.backend.entity.Pricing;
 import com.shareSphere.backend.entity.Skill;
-import com.shareSphere.backend.entity.Tool;
 import com.shareSphere.backend.entity.User;
 import com.shareSphere.backend.repositories.PricingRepository;
 import com.shareSphere.backend.repositories.SkillRepository;
@@ -45,6 +44,8 @@ public class SkillService {
                 .description(skillDto.getDescription())
                 .availability(skillDto.getAvailability())
                 .createdAt(LocalDateTime.now())
+                .startDate(skillDto.getStartDate())
+                .endDate(skillDto.getEndDate())
                 .user(user)
                 .imageUrls(imageUrls) // Make sure Skill entity has List<String> imageUrls
                 .build();
@@ -79,7 +80,7 @@ public class SkillService {
     }
 
 
-    public List<SkillDto> getToolByUserId(String userId) {
+    public List<SkillDto> getSkillByUserId(String userId) {
         List<Skill> skills = skillRepository.findByUserId(userId);
         return skills.stream().map(skill ->
                     SkillDto.builder()
@@ -169,5 +170,55 @@ public class SkillService {
 
         skillRepository.delete(skill);
         return "Skill deleted successfully!";
+    }
+
+    public List<SkillDto> getAllSkills() {
+        List<Skill> skills = skillRepository.findAll();
+        return skills.stream()
+                .map(skill -> {
+                    Pricing pricing = pricingRepository.findBySkillId(skill.getSkillId())
+                            .orElseThrow(() -> new RuntimeException("No pricing found for skillId: " + skill.getSkillId()));
+
+                    return SkillDto.builder()
+                            .skillId(skill.getSkillId())
+                            .userId(skill.getUser().getId())
+                            .name(skill.getName())
+                            .description(skill.getDescription())
+                            .availability(skill.getAvailability())
+                            .createdAt(skill.getCreatedAt())
+                            .startDate(skill.getStartDate())
+                            .endDate(skill.getEndDate())
+                            .imageUrls(skill.getImageUrls())
+                            .pricingId(pricing.getPricingId())
+                            .priceType(pricing.getPriceType())
+                            .price(pricing.getPrice())
+                            .build();
+                })
+                .collect(Collectors.toList());
+
+
+    }
+
+    public SkillDto getSkillBySkillId(String skillId) {
+        Skill skill = skillRepository.findById(Long.valueOf(skillId))
+                .orElseThrow(() -> new RuntimeException("Skill not found with id: " + skillId));
+
+        Pricing pricing = pricingRepository.findBySkillId(skill.getSkillId())
+                .orElseThrow(() -> new RuntimeException("No pricing found for skillId: " + skill.getSkillId()));
+
+        return SkillDto.builder()
+                .skillId(skill.getSkillId())
+                .userId(skill.getUser().getId())
+                .name(skill.getName())
+                .description(skill.getDescription())
+                .availability(skill.getAvailability())
+                .createdAt(skill.getCreatedAt())
+                .startDate(skill.getStartDate())
+                .endDate(skill.getEndDate())
+                .imageUrls(skill.getImageUrls())
+                .pricingId(pricing.getPricingId())
+                .price(pricing.getPrice())
+                .priceType(pricing.getPriceType())
+                .build();
     }
 }
