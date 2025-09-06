@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ExchangeRepository extends JpaRepository<Exchange,Long> {
     List<Exchange> findByReceiverId(String userId);
+    List<Exchange> findByGiverId(String userId);
 }

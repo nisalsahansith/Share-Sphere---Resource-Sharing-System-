@@ -268,6 +268,13 @@ function renderAllBookings() {
     const emptyState = $('#skillEmptyState');
     
     const allBookings = [...skillBookings, ...toolBookings];
+
+    // ✅ Sort by requestId (skillRequestId or toolRequestId) DESC
+    allBookings.sort((a, b) => {
+        const aId = a.skillRequestId || a.toolRequestId || 0;
+        const bId = b.skillRequestId || b.toolRequestId || 0;
+        return bId - aId; // latest first
+    });
     const filteredBookings = getFilteredBookings(allBookings);
     
     if (filteredBookings.length === 0) {

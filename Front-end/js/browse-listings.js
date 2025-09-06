@@ -55,7 +55,7 @@ $("#bookingForm").on("submit", function (e) {
 
     const listingType = $("#listingModal").data("listingType"); // SKILL or TOOL
     console.log("Listing Type:", listingType); // Debugging line
-    const userId = $("#listingModal").data("userId"); 
+    const userId = localStorage.getItem("userId"); 
     const listingId = $("#listingModal").data("listingId"); 
     const message = $("#bookingMessage").val();
     const selectedDate = $("#bookingDate").val(); 

@@ -11,6 +11,9 @@ $(document).ready(function () {
             if (response.data && Array.isArray(response.data)) {
                 let listingsHtml = "";
 
+                response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+
                 response.data.forEach((skill, index) => {
                     let carouselItems = "";
                     if (skill.imageUrls && skill.imageUrls.length > 0) {
@@ -69,6 +72,7 @@ $(document).ready(function () {
             headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
             success: function (reqResponse) {
                 let requests = reqResponse.data || [];
+                requests.sort((a, b) => b.toolId - a.toolId);
                 let totalRequests = requests.length;
                 let newRequests = requests.filter(r => r.status === "PENDING").length;
 
@@ -136,6 +140,7 @@ $(document).ready(function () {
         success: function (response) {
             if (response.data && Array.isArray(response.data)) {
                 let toolsHtml = "";
+                response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
                 response.data.forEach((tool, index) => {
                     let carouselItems = "";
@@ -204,6 +209,8 @@ $(document).ready(function () {
             headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
             success: function (reqResponse) {
                 let requests = reqResponse.data || [];
+                requests.sort((a, b) => new Date(b.requestedDates) - new Date(a.requestedDates));
+
                 let totalRequests = requests.length;
                 let newRequests = requests.filter(r => r.status === "PENDING").length;
 
@@ -232,6 +239,7 @@ $(document).ready(function () {
     $(document).on("click", ".tool-requests-btn", function () {
         let requests = $(this).data("requests") || [];
         let container = $("#toolRequestsContainer");
+        console.log("REQ",requests)
         container.empty();
 
         if (requests.length > 0) {
@@ -282,6 +290,7 @@ $(document).on("click", ".request-card", function() {
             $("#requesterImage").attr("src", user.data.userImage || "https://thvnext.bing.com/th/id/OIP.1gkxdleEjreaeUbLYpyC4QHaHa?o=7&cb=ucfimg2rm=3&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3");
             $("#requesterName").text(user.data.firstName + " " + user.data.lastName);
             $("#requesterEmail").text(user.data.user.email || "");
+            $("#requesterId").text(userId);
 
             // Fill request details
             $("#requestType").text(requestData.skillId ? "Skill" : "Tool");
@@ -370,8 +379,9 @@ $("#acceptRequestBtn, #rejectRequestBtn, #maybeLaterBtn").click(function() {
 
     const requestId = $(this).data("request-id");
     const requestType = $("#requestType").text().toUpperCase(); // "SKILL" or "TOOL"
+    const requesterId = $("#requesterId").text();
     const requestData = $(".request-card").data("request"); // saved earlier
-    console.log(requestType)
+    console.log("REQUESTER ID",requesterId)
 
     Swal.fire({
         title: `Are you sure?`,
@@ -388,7 +398,7 @@ $("#acceptRequestBtn, #rejectRequestBtn, #maybeLaterBtn").click(function() {
 
             formData.append("status", status);
             formData.append("type", requestType); // must be SKILL/TOOL
-            formData.append("receiver", requestData.requesterId);
+            formData.append("receiver", requesterId);
             formData.append("giver", localStorage.getItem("userId"));
             formData.append("startTime", requestData.borrowStartDate)
             formData.append("endTime", requestData.borrowEndDate)

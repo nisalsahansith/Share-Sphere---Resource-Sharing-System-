@@ -130,82 +130,90 @@ $(document).ready(function () {
     // Load User Listings (Skills & Tools)
     // =================================
     function loadUserListings() {
-        const token = localStorage.getItem("token");
-        const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
 
-        $("#skillsTableBody, #toolsTableBody").empty();
+    $("#skillsTableBody, #toolsTableBody").empty();
 
-        // Skills
-        $.ajax({
-            url: "http://localhost:8080/postlisting/skills",
-            data: { userId },
-            type: "GET",
-            headers: { "Authorization": "Bearer " + token },
-            success: function (response) {
-                let skills = response.data || [];
-                if (!skills.length) {
-                    $("#skillsTable").hide();
-                    $("#noSkillsMessage").show();
-                } else {
-                    $("#skillsTable").show();
-                    $("#noSkillsMessage").hide();
-                    skills.forEach(skill => {
-                        let imageUrl = skill.imageUrls?.[0] || "/assets/images/OIP.webp";
-                        $("#skillsTableBody").append(`
-                            <tr data-id="${skill.skillId}" data-type="skill">
-                                <td><img src="${imageUrl}" class="table-thumbnail"></td>
-                                <td>${skill.name}</td>
-                                <td>${skill.availability}</td>
-                                <td>${skill.startDate}</td>
-                                <td>${skill.endDate}</td>
-                                <td>
-                                    <button class="btn btn-info btn-sm view-skill">View</button>
-                                    <button class="btn btn-warning btn-sm edit-skill">Edit</button>
-                                    <button class="btn btn-danger btn-sm delete-skill">Delete</button>
-                                </td>
-                            </tr>
-                        `);
-                    });
-                }
-            },
-            error: function (xhr) { console.error("Failed to fetch skills", xhr.responseText); }
-        });
+    // Skills
+    $.ajax({
+        url: "http://localhost:8080/postlisting/skills",
+        data: { userId },
+        type: "GET",
+        headers: { "Authorization": "Bearer " + token },
+        success: function (response) {
+            let skills = response.data || [];
 
-        // Tools
-        $.ajax({
-            url: "http://localhost:8080/postlisting/tools",
-            data: { userId },
-            type: "GET",
-            headers: { "Authorization": "Bearer " + token },
-            success: function (response) {
-                let tools = response.data || [];
-                if (!tools.length) {
-                    $("#toolsTable").hide();
-                    $("#noToolsMessage").show();
-                } else {
-                    $("#toolsTable").show();
-                    $("#noToolsMessage").hide();
-                    tools.forEach(tool => {
-                        let imageUrl = tool.imageUrls?.[0] || "/assets/images/OIP.webp";
-                        $("#toolsTableBody").append(`
-                            <tr data-id="${tool.toolId}" data-type="tool">
-                                <td><img src="${imageUrl}" class="table-thumbnail"></td>
-                                <td>${tool.name}</td>
-                                <td>${tool.availabilityStatus}</td>
-                                <td>${tool.startDate}</td>
-                                <td>${tool.endDate}</td>
-                                <td>
-                                    <button class="btn btn-info btn-sm view-tool">View</button>
-                                    <button class="btn btn-warning btn-sm edit-tool">Edit</button>
-                                    <button class="btn btn-danger btn-sm delete-tool">Delete</button>
-                                </td>
-                            </tr>
-                        `);
-                    });
-                }
-            },
-            error: function (xhr) { console.error("Failed to fetch tools", xhr.responseText); }
-        });
+            // Sort by createdAt DESC
+            skills.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+            if (!skills.length) {
+                $("#skillsTable").hide();
+                $("#noSkillsMessage").show();
+            } else {
+                $("#skillsTable").show();
+                $("#noSkillsMessage").hide();
+                skills.forEach(skill => {
+                    let imageUrl = skill.imageUrls?.[0] || "/assets/images/OIP.webp";
+                    $("#skillsTableBody").append(`
+                        <tr data-id="${skill.skillId}" data-type="skill">
+                            <td><img src="${imageUrl}" class="table-thumbnail"></td>
+                            <td>${skill.name}</td>
+                            <td>${skill.availability}</td>
+                            <td>${skill.startDate}</td>
+                            <td>${skill.endDate}</td>
+                            <td>
+                                <button class="btn btn-info btn-sm view-skill">View</button>
+                                <button class="btn btn-warning btn-sm edit-skill">Edit</button>
+                                <button class="btn btn-danger btn-sm delete-skill">Delete</button>
+                            </td>
+                        </tr>
+                    `);
+                });
+            }
+        },
+        error: function (xhr) { console.error("Failed to fetch skills", xhr.responseText); }
+    });
+
+    // Tools
+    $.ajax({
+        url: "http://localhost:8080/postlisting/tools",
+        data: { userId },
+        type: "GET",
+        headers: { "Authorization": "Bearer " + token },
+        success: function (response) {
+            let tools = response.data || [];
+
+            // Sort by createdAt DESC
+            tools.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+            if (!tools.length) {
+                $("#toolsTable").hide();
+                $("#noToolsMessage").show();
+            } else {
+                $("#toolsTable").show();
+                $("#noToolsMessage").hide();
+                tools.forEach(tool => {
+                    let imageUrl = tool.imageUrls?.[0] || "/assets/images/OIP.webp";
+                    $("#toolsTableBody").append(`
+                        <tr data-id="${tool.toolId}" data-type="tool">
+                            <td><img src="${imageUrl}" class="table-thumbnail"></td>
+                            <td>${tool.name}</td>
+                            <td>${tool.availabilityStatus}</td>
+                            <td>${tool.startDate}</td>
+                            <td>${tool.endDate}</td>
+                            <td>
+                                <button class="btn btn-info btn-sm view-tool">View</button>
+                                <button class="btn btn-warning btn-sm edit-tool">Edit</button>
+                                <button class="btn btn-danger btn-sm delete-tool">Delete</button>
+                            </td>
+                        </tr>
+                    `);
+                });
+            }
+        },
+        error: function (xhr) { console.error("Failed to fetch tools", xhr.responseText); }
+    });
     }
 
     // =================================

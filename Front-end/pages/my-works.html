@@ -4,12 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Messages</title>
+    <title>My Listings - ShareSphere</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/messages.css">
-    <link rel="stylesheet" href="/css/basic-css.css">    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/basic-css.css">
+    <link rel="stylesheet" href="/css/myWorks.css">
+    <!-- SweetAlert2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css" rel="stylesheet">
+
+    <!-- Optional: Animate.css for animations -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+
+    <!-- Optional: Font Awesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     
 </head>
 
@@ -21,7 +28,7 @@
                 <i class="fas fa-bars"></i>
             </button>
             <a class="navbar-brand" href="/pages/user-dashboard.html">ShareSphere</a>
-    
+
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
@@ -62,13 +69,13 @@
                     </li>
                 </ul>
             </div>
-    
+
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <i class="fas fa-bars text-primary"></i>
             </button>
         </div>
     </nav>
-    
+
     <!-- Enhanced Sidebar -->
     <div id="sidebar">
         <button class="close-btn" id="closeSidebar">
@@ -98,61 +105,67 @@
         </button>
     </div>
 
-    <!-- Messaging Section -->
-    <div class="container-fluid mt-4">
-        <div class="row">
-            <!-- Chat List -->
-            <div class="col-md-4 col-lg-3">
-                <div class="card listing-card h-100">
-                    <div class="card-header fw-bold">Chats</div>
-                    <ul class="list-group list-group-flush chat-list" id="chatList">
-                        <li class="list-group-item chat-item active" data-chat="1">
-                            <i class="fas fa-user-circle me-2"></i> John Doe
-                        </li>
-                        <li class="list-group-item chat-item" data-chat="2">
-                            <i class="fas fa-user-circle me-2"></i> Sarah Smith
-                        </li>
-                        <li class="list-group-item chat-item" data-chat="3">
-                            <i class="fas fa-user-circle me-2"></i> Alex Johnson
-                        </li>
-                    </ul>
+    <!-- My Works Hero Section -->
+    <section class="hero-section bg-primary text-white py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Left Content -->
+                <div class="col-md-6 text-center text-md-start mb-4 mb-md-0 fade-in">
+                    <h1 class="fw-bold mb-3">My Works</h1>
+                    <p class="mb-4">
+                        Manage and showcase all your projects, listings, and completed works in one place. Keep track of
+                        your activities and stay organized effortlessly.
+                    </p>
+                    <div class="d-flex gap-3 flex-wrap justify-content-center justify-content-md-start">
+                        <a href="/pages/myListing.html" class="btn btn-light btn-lg">
+                            <i class="fas me-2"></i>My Listing
+                        </a>
+                        <a href="/pages/browse-listings.html" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-search me-2"></i>Explore Listings
+                        </a>
+                    </div>
+                </div>
+    
+                <!-- Right Image -->
+                <div class="col-md-6 text-center fade-in">
+                    <img src="https://th.bing.com/th/id/R.6aac7160b26900ea4e46dd9ba8aad823?rik=VF7yjB6GKCAtwQ&pid=ImgRaw&r=0"
+                        alt="My Works Management" class="img-fluid hero-image rounded shadow-lg">
                 </div>
             </div>
+        </div>
+    </section>
 
-            <!-- Chat Window -->
-            <div class="col-md-8 col-lg-9">
-                <div class="card listing-card h-100">
-                    <div class="card-header fw-bold" id="chatHeader">John Doe</div>
-                    <div class="card-body chat-body" id="chatBody" style="height:400px; overflow-y:auto;">
-                        <!-- Messages dynamically loaded -->
-                        <div class="message incoming">
-                            <p>Hello! Is your lawn mower available?</p>
-                        </div>
-                        <div class="message outgoing">
-                            <p>Yes, it’s available this weekend!</p>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <form id="messageForm" class="d-flex align-items-center gap-2">
-                            <!-- Image Upload -->
-                            <label for="imageInput" class="btn btn-outline-primary mb-0">
-                                <i class="fas fa-image"></i>
-                            </label>
-                            <input type="file" id="imageInput" accept="image/*" style="display: none;">
-                    
-                            <!-- Location Share -->
-                            <button type="button" id="shareLocation" class="btn btn-outline-success">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </button>
-                    
-                            <!-- Text Message -->
-                            <input type="text" class="form-control" id="messageInput" placeholder="Type a message...">
-                    
-                            <!-- Send -->
-                            <button class="btn btn-primary"><i class="fas fa-paper-plane"></i></button>
-                        </form>
-                    </div>
+    <div class="container my-works-section">
+        <h2 class="mb-4">My Works</h2>
+        <div id="myWorksContainer" class="row g-4">
+            <!-- Works will be rendered here -->
+        </div>
+    </div>
+    
+    <!-- Details Modal -->
+    <!-- <div class="modal fade" id="detailsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Work Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body"></div>
+            </div>
+        </div>
+    </div> -->
 
+    <!-- Enhanced Modal -->
+    <div class="modal fade" id="detailsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title-container">
+                        <!-- Title and content will be populated by JavaScript -->
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <!-- Body content will be populated by JavaScript -->
                 </div>
             </div>
         </div>
@@ -163,19 +176,21 @@
         <div class="footer-container">
             <div class="footer-about">
                 <h3>ShareSphere</h3>
-                <p>ShareSphere is your go-to platform for renting and lending items, skills safely and easily. Connect,
-                    share, and save today!</p>
+                <p>ShareSphere is your go-to platform for renting and lending items safely and easily. Connect, share,
+                    and save today!</p>
             </div>
+
             <div class="footer-links">
                 <h4>Quick Links</h4>
                 <ul>
-                    <li><a href="/pages/user-dashboard.html">Home</a></li>
-                    <li><a href="/pages/browse-listings.html">Browse Listings</a></li>
-                    <li><a href="/pages/post-a-listing.html">Post an Item</a></li>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Browse Listings</a></li>
+                    <li><a href="#">Post an Item</a></li>
                     <li><a href="#">FAQs</a></li>
                     <li><a href="#">Contact</a></li>
                 </ul>
             </div>
+
             <div class="footer-contact">
                 <h4>Contact Us</h4>
                 <p>Email: support@sharesphere.com</p>
@@ -188,6 +203,7 @@
                 </div>
             </div>
         </div>
+
         <div class="footer-bottom">
             <p>&copy; 2025 ShareSphere. All Rights Reserved.</p>
         </div>
@@ -197,9 +213,10 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.all.min.js"></script>
     <script src="/js/user-dashboard.js"></script>
+    <script src="/js/myWorks.js"></script>
 
 
-    <script src="/js/messages.js"></script>
+    <!-- Bootstrap icons for edit/delete -->
 </body>
 
 </html>
