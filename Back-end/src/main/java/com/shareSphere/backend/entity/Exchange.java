@@ -40,7 +40,14 @@ public class Exchange {
     @OneToOne(mappedBy = "exchange", cascade = CascadeType.ALL)
     private Payment payment;
 
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
     public enum Type {
         SKILL, TOOL
+    }
+
+    public enum Status{
+        PENDING,PAYED,REJECTED,COMPLETE,DONE
     }
 }

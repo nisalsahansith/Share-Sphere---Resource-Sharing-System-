@@ -1,5 +1,7 @@
     // Enhanced JavaScript Functions
-    function filterBookings(status) {
+    let receiverId = "";
+    
+function filterBookings(status) {
         const tabs = document.querySelectorAll('.filter-tab');
         const bookings = document.querySelectorAll('.booking-item');
         const container = document.getElementById('bookingsContainer');
@@ -326,6 +328,9 @@ function createBookingCard(booking, type, index) {
         imageUrl = item.imageUrls[0];
     }
 
+
+    receiverId = item.userId;
+    console.log("REC",receiverId)
     // Format dates
     let dateRange = 'TBA';
     if (type === 'tool') {
@@ -335,7 +340,6 @@ function createBookingCard(booking, type, index) {
         const endDate = booking.borrowEndDate ? new Date(booking.borrowEndDate).toLocaleDateString('en-US', {
             year: 'numeric', month: 'short', day: 'numeric'
         }) : null;
-        
         if (startDate && endDate) {
             dateRange = startDate !== endDate ? `${startDate} - ${endDate}` : startDate;
         }
@@ -346,12 +350,11 @@ function createBookingCard(booking, type, index) {
         const endDate = item.endDate ? new Date(item.endDate).toLocaleDateString('en-US', {
             year: 'numeric', month: 'short', day: 'numeric'
         }) : null;
-        
         if (startDate && endDate) {
             dateRange = startDate !== endDate ? `${startDate} - ${endDate}` : startDate;
         }
     }
-
+    console.log(receiverId)
     // Format price
     const price = booking.price ? parseFloat(booking.price).toFixed(2) : null;
     
@@ -441,7 +444,8 @@ function createBookingCard(booking, type, index) {
                     
                     <!-- Message (if available) -->
                     ${booking.message ? `
-                        <div class="booking-message mb-3 p-2 bg-info bg-opacity-10 rounded border-start border-info border-3">
+                        <div class="booking-message mb-3 p-2 bg-info bg-opacity-10 rounded border-start border-info border-3"
+                        <div class="ms-4 p-3 bg-light rounded"')>
                             <small class="text-muted">
                                 <i class="fas fa-comment-dots me-1"></i>
                                 <em>"${booking.message}"</em>
@@ -453,11 +457,11 @@ function createBookingCard(booking, type, index) {
                     <div class="mt-auto">
                         <div class="d-flex gap-2 align-items-center">
                             <!-- View Details Button -->
-                            <button class="btn btn-primary flex-fill" onclick="viewBookingDetails(${requestId || 0}, '${type}')">
+                            <button class="btn btn-primary flex-fill" onclick="viewBookingDetails(${requestId || 0}, '${type}', '${receiverId}')">
                                 <i class="fas fa-eye me-1"></i>Details
                             </button>
                             
-                            ${getActionIcons(booking, type, itemId)}
+                            ${getActionIcons(booking, type, receiverId)}
                         </div>
                     </div>
                 </div>
@@ -508,12 +512,12 @@ function getStatusConfig(status) {
 }
 
 // Get action icons based on booking status and type
-function getActionIcons(booking, type, itemId) {
+function getActionIcons(booking, type, receiverId) {
     const status = booking.status?.toUpperCase();
     
     if (status === 'PENDING') {
         return `
-            <button class="btn btn-outline-info btn-sm" onclick="contactProvider(${itemId || 0}, '${type}')" title="Contact Provider">
+            <button class="btn btn-outline-info btn-sm" onclick="contactProvider('${receiverId}')" title="Contact Provider">
                 <i class="fas fa-comments"></i>
             </button>
             <button class="btn btn-outline-danger btn-sm" onclick="cancelBooking(${booking[type === 'skill' ? 'skillRequestId' : 'toolRequestId'] || 0}, '${type}')" title="Cancel Request">
@@ -522,7 +526,7 @@ function getActionIcons(booking, type, itemId) {
         `;
     } else if (status === 'CONFIRMED' || status === 'ACCEPTED') {
         return `
-            <button class="btn btn-outline-info btn-sm" onclick="contactProvider(${itemId || 0}, '${type}')" title="Contact Provider">
+            <button class="btn btn-outline-info btn-sm" onclick="contactProvider('${receiverId}')" title="Contact Provider">
                 <i class="fas fa-comments"></i>
             </button>
         `;
@@ -574,7 +578,7 @@ function filterBookings(status) {
 }
 
 // View booking details (unified for both types)
-function viewBookingDetails(requestId, type) {
+function viewBookingDetails(requestId, type, receiverId) {
     const bookings = type === 'skill' ? skillBookings : toolBookings;
     const idField = type === 'skill' ? 'skillRequestId' : 'toolRequestId';
     const booking = bookings.find(b => b[idField] == requestId);
@@ -646,7 +650,7 @@ function viewBookingDetails(requestId, type) {
         `,
         width: 700,
         showCancelButton: true,
-        confirmButtonText: '<i class="fas fa-comments me-2"></i>Contact Provider',
+        confirmButtonText: '<i class="fas fa-comments me-2" ></i>Contact Provider',
         cancelButtonText: 'Close',
         customClass: {
             confirmButton: 'btn btn-primary me-2',
@@ -656,25 +660,25 @@ function viewBookingDetails(requestId, type) {
     }).then((result) => {
         if (result.isConfirmed) {
             const itemId = type === 'skill' ? booking.skillId : booking.toolId;
-            contactProvider(itemId, type);
+            contactProvider(receiverId);
         }
     });
 }
 
 // Contact provider (unified)
-function contactProvider(itemId, type) {
-    Swal.fire({
-        title: 'Contact Provider',
-        text: 'Opening message interface...',
-        icon: 'info',
-        timer: 1500,
-        showConfirmButton: false
-    });
+// function contactProvider(itemId, type) {
+//     Swal.fire({
+//         title: 'Contact Provider',
+//         text: 'Opening message interface...',
+//         icon: 'info',
+//         timer: 1500,
+//         showConfirmButton: false
+//     });
     
-    setTimeout(() => {
-        window.location.href = `/pages/messages.html?${type}Id=${itemId}`;
-    }, 1500);
-}
+//     setTimeout(() => {
+//         window.location.href = `/pages/messages.html?${type}Id=${itemId}`;
+//     }, 1500);
+// }
 
 // Cancel booking (unified)
 function cancelBooking(requestId, type) {
@@ -792,3 +796,15 @@ $(document).ready(function() {
         filterBookings(filter);
     });
 });
+
+function contactProvider(providerId) {
+    let customerId = localStorage.getItem("userId")
+    console.log(providerId,customerId)
+    // Save chat context in localStorage (or sessionStorage)
+    // localStorage.setItem("chatExchangeId", exchangeId);
+    localStorage.setItem("chatProviderId", providerId);
+    localStorage.setItem("chatCustomerId", customerId);
+
+    // Redirect to messages page
+    window.location.href = "/pages/messages.html"; // adjust to your chat page path
+}

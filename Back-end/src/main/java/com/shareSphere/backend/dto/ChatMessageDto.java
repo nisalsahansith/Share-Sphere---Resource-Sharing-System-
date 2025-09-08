@@ -13,6 +13,8 @@ public class ChatMessageDto {
     private Long exchangeId;
     private String senderId;
     private String receiverId;
-    private String content;
+    private String content;   // optional for text
+    private String fileUrl;   // optional for files
+    private String fileType;
     private LocalDateTime timestamp;
 }

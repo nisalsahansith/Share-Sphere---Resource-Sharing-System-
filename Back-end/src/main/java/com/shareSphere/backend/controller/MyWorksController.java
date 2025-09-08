@@ -27,4 +27,13 @@ public class MyWorksController {
                 ,exchanges
         ));
     }
+
+    @PutMapping("/updatestatus")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<APIResponse> updateStatus(@RequestParam String status,@RequestParam String exchangeId){
+        return ResponseEntity.ok(new APIResponse(
+                200,
+                "OK",
+                exchangeService.updateExchangeStatus(exchangeId,status.toUpperCase())));
+    }
 }

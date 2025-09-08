@@ -27,38 +27,57 @@ $(document).ready(function () {
         
         data.forEach(work => {
             const isPaid = work.paymentId ? true : false;
-
+             let Status = work.status || null
             // Action buttons on card
-            const actionButton = isPaid 
-                ? `<button class="btn btn-sm btn-success" disabled>
-                       <i class="fas fa-check"></i> Done
-                   </button>`
-                : `<button class="btn btn-sm btn-danger" onclick="rejectWork(${work.exchangeId})">
-                       <i class="fas fa-times"></i> Reject
-                   </button>`;
+       let actionButton = "";
+
+        if (Status === "DONE") {
+            actionButton = `<button class="btn btn-sm btn-primary" disabled>
+                            <i class="fas fa-check-circle"></i> Complete
+                        </button>`;
+        } else if (Status === "REJECTED") {
+            actionButton = `<button class="btn btn-sm btn-secondary" disabled>
+                            <i class="fas fa-times-circle"></i> Rejected
+                        </button>`;
+        } else if (isPaid) {
+            actionButton = `<button class="btn btn-sm btn-success" onClick="doneWork(${work.exchangeId})">
+                            <i class="fas fa-check"></i> Done
+                        </button>`;
+        } else {
+            actionButton = `<button class="btn btn-sm btn-danger" onclick="rejectWork(${work.exchangeId})">
+                            <i class="fas fa-times"></i> Reject
+                        </button>`;
+        }
+
+        // Card badge for rejected
+        const statusBadge = Status === "REJECTED" 
+            ? `<span class="badge bg-danger position-absolute top-0 end-0 m-2">Rejected</span>` 
+            : Status === "DONE"? `<span class="badge bg-info position-absolute top-0 end-0 m-2">Complete</span>`:"";
 
             const type = work.type;
-            let title = "", description = "", images = [], price = 0, message = "", paymentId = null;
-
+            let title = "", description = "", images = [], price = 0, message = "", paymentId = null,  status = "",receiverId = "";
+            receiverId = work.receiverId
             if (type === "TOOL" && work.toolRequestDto) {
                 title = work.toolRequestDto.toolDto?.name || "Unnamed Tool";
                 description = work.toolRequestDto.toolDto?.description || "";
                 images = work.toolRequestDto.toolDto?.imageUrls || [];
                 price = work.toolRequestDto.price || 0;
                 message = work.toolRequestDto.message || "";
-                paymentId = work.toolRequestDto.paymentId || work.paymentId || null;
+                paymentId = work.paymentId || null;
+                status = work.status || null
             } else if (type === "SKILL" && work.skillRequestDto) {
                 title = work.skillRequestDto.skillDto?.name || "Unnamed Skill";
                 description = work.skillRequestDto.skillDto?.description || "";
                 images = work.skillRequestDto.skillDto?.imageUrls || [];
                 price = work.skillRequestDto.price || 0;
                 message = work.skillRequestDto.message || "";
-                paymentId = work.skillRequestDto.paymentId || work.paymentId || null;
+                paymentId = work.paymentId || null;
+                status = work.status || null
             }
-            
             content += `
                 <div class="col-md-6 col-lg-4 fade-in">
-                    <div class="card booking-card shadow-sm h-100">
+                    <div class="card booking-card shadow-sm h-100 position-relative">
+                    ${statusBadge}
                         <div class="booking-images">
                             ${generateImageGallery(images, work.exchangeId)}
                         </div>
@@ -69,7 +88,7 @@ $(document).ready(function () {
                             <p><strong>Type:</strong> ${type}</p>
                             <p class="booking-price"><strong>Price:</strong> $${price.toFixed(2)}</p>
                             <div class="d-flex justify-content-between">
-                                <button class="btn btn-sm btn-outline-primary" onclick="openDetailsModal(${work.exchangeId}, '${title}', '${message}', ${price}, '${paymentId}')">
+                                <button class="btn btn-sm btn-outline-primary" onclick="openDetailsModal(${work.exchangeId}, '${title}', '${message}', ${price}, '${paymentId}', '${status}','${receiverId}')">
                                     <i class="fas fa-eye"></i> View
                                 </button>
                                 ${actionButton}
@@ -130,14 +149,27 @@ function scrollGalleryRight(id) {
 }
 
 // Open details modal
-function openDetailsModal(exchangeId, title, message, price, paymentId) {
-            const isPaid = paymentId ? true : false;
+function openDetailsModal(exchangeId, title, message, price, paymentId, status, receiverId) {
+            const isPaid = paymentId !== null && paymentId !== undefined && !isNaN(paymentId);
             const isOverdue = !isPaid && Math.random() > 0.5; // Simulated overdue status
             
-            // Determine status and styling
-            let statusClass = isPaid ? 'badge-paid' : 'badge-unpaid';
-    let statusIcon = isPaid ? 'fas fa-check-circle' : 'fas fa-clock';
-    let statusText = isPaid ? 'Complete' : 'Pending';
+            let statusClass = "badge-unpaid";
+    let statusIcon = "fas fa-clock";
+    let statusText = "Pending";
+
+    if (isPaid) {
+        statusClass = "badge-paid";
+        statusIcon = "fas fa-check-circle";
+        statusText = "Complete";
+    } else if (status === "REJECTED") {
+        statusClass = "badge-rejected";
+        statusIcon = "fas fa-times-circle";
+        statusText = "Rejected";
+    } else if (status === "DONE") {
+        statusClass = "badge-done";
+        statusIcon = "fas fa-info-circle";
+        statusText = "Done"
+    }
 
             // Create the enhanced header
             const headerHtml = `
@@ -152,7 +184,7 @@ function openDetailsModal(exchangeId, title, message, price, paymentId) {
                         <i class="${statusIcon}"></i>
                         ${statusText}
                     </div>
-                    <button class="btn-modal-action btn-chat" onclick="openChat('${exchangeId}')">
+                    <button class="btn-modal-action btn-chat" onclick="contactProvider('${exchangeId}','${receiverId}','${localStorage.getItem("userId")}')">
                         <i class="fas fa-comments me-2"></i>Chat
                     </button>
                     <button type="button" class="btn-close-custom" data-bs-dismiss="modal">
@@ -175,7 +207,7 @@ function openDetailsModal(exchangeId, title, message, price, paymentId) {
                                     <h5 class="detail-label">Requester Message</h5>
                                 </div>
                                 <div class="detail-content">
-                                    <p class="detail-text">${message}</p>
+                                    <p class="detail-text" >${message}</p>
                                 </div>
                             </div>
 
@@ -255,12 +287,15 @@ function openDetailsModal(exchangeId, title, message, price, paymentId) {
                             </div>
                         </div>
 
-                        <!-- Action Buttons -->
-                        <div class="modal-footer-actions">
-                        ${!isPaid 
+                        <!-- Footer Actions -->
+                <div class="modal-footer-actions">
+                    ${status === "REJECTED"
+                        ? `<button class="btn btn-secondary" disabled>Rejected</button>`
+                : status === "DONE" ? `<button class="btn btn-primary" disabled>Complete</button>`
+                    :(!isPaid 
                             ? `<button class="btn btn-danger" onclick="rejectWork(${exchangeId})">Reject</button>` 
-                            : `<button class="btn btn-success" disabled>Done</button>`}
-                        </div>
+                            : `<button class="btn btn-success" onClick="doneWork(${exchangeId})">Done</button>`)}
+                </div>
                     </div>
                 </div>
             `;
@@ -333,4 +368,113 @@ function openPaymentModal(exchangeId, price) {
         window.location.href = `https://sandbox.payhere.lk/pay?amount=${price}&order_id=${exchangeId}`;
     });
     $("#paymentModal").modal("show");
+}
+
+function rejectWork(exchangeId) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "This work will be rejected.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, reject it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const token = localStorage.getItem("token");
+
+            $.ajax({
+                url: "http://localhost:8080/myworks/updatestatus",
+                method: "PUT",  // or PUT if your backend expects it
+                headers: {
+                    "Authorization": "Bearer " + token
+                },
+                data: {
+                    exchangeId: exchangeId,
+                    status: "REJECTED"
+                },
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Rejected!',
+                        text: `Work #${exchangeId} has been rejected.`,
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+
+                    // Update button/card dynamically
+                    $(`button[onclick="rejectWork(${exchangeId})"]`)
+                        .replaceWith(`<button class="btn btn-success btn-sm" disabled><i class="fas fa-check"></i> Done</button>`);
+                },
+                error: function (xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Failed',
+                        text: 'Unable to reject the work. Please try again.'
+                    });
+                }
+            });
+        }
+    });
+}
+
+function doneWork(exchangeId) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "This work will be marked as Done.",
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: 'rgba(44, 143, 41, 1)',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, Done work!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const token = localStorage.getItem("token");
+
+            $.ajax({
+                url: "http://localhost:8080/myworks/updatestatus",
+                method: "PUT",
+                headers: {
+                    "Authorization": "Bearer " + token
+                },
+                data: {
+                    exchangeId: exchangeId,
+                    status: "DONE"
+                },
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Done!',
+                        text: `Work #${exchangeId} has been marked as Complete.`,
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+
+                    // ✅ Replace the Done button with Complete (disabled)
+                    $(`button[onclick="doneWork(${exchangeId})"]`)
+                        .replaceWith(`<button class="btn btn-sm btn-primary" disabled>
+                                         <i class="fas fa-check-circle"></i> Complete
+                                      </button>`);
+                },
+                error: function (xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Failed',
+                        text: 'Unable to mark work as done. Please try again.'
+                    });
+                }
+            });
+        }
+    });
+}
+
+function contactProvider(exchangeId, providerId, customerId) {
+    console.log(exchangeId,providerId,customerId)
+    // Save chat context in localStorage (or sessionStorage)
+    localStorage.setItem("chatExchangeId", exchangeId);
+    localStorage.setItem("chatProviderId", providerId);
+    localStorage.setItem("chatCustomerId", customerId);
+
+    // Redirect to messages page
+    window.location.href = "/pages/messages.html"; // adjust to your chat page path
 }

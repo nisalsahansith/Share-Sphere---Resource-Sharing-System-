@@ -106,53 +106,34 @@
                 <div class="card listing-card h-100">
                     <div class="card-header fw-bold">Chats</div>
                     <ul class="list-group list-group-flush chat-list" id="chatList">
-                        <li class="list-group-item chat-item active" data-chat="1">
-                            <i class="fas fa-user-circle me-2"></i> John Doe
-                        </li>
-                        <li class="list-group-item chat-item" data-chat="2">
-                            <i class="fas fa-user-circle me-2"></i> Sarah Smith
-                        </li>
-                        <li class="list-group-item chat-item" data-chat="3">
-                            <i class="fas fa-user-circle me-2"></i> Alex Johnson
-                        </li>
+                        <!-- Chats dynamically loaded here -->
                     </ul>
                 </div>
             </div>
-
+    
             <!-- Chat Window -->
             <div class="col-md-8 col-lg-9">
                 <div class="card listing-card h-100">
-                    <div class="card-header fw-bold" id="chatHeader">John Doe</div>
+                    <div class="card-header fw-bold" id="chatHeader">Select a chat</div>
                     <div class="card-body chat-body" id="chatBody" style="height:400px; overflow-y:auto;">
-                        <!-- Messages dynamically loaded -->
-                        <div class="message incoming">
-                            <p>Hello! Is your lawn mower available?</p>
-                        </div>
-                        <div class="message outgoing">
-                            <p>Yes, it’s available this weekend!</p>
-                        </div>
+                        <!-- Messages dynamically loaded here -->
                     </div>
                     <div class="card-footer">
                         <form id="messageForm" class="d-flex align-items-center gap-2">
-                            <!-- Image Upload -->
                             <label for="imageInput" class="btn btn-outline-primary mb-0">
                                 <i class="fas fa-image"></i>
                             </label>
                             <input type="file" id="imageInput" accept="image/*" style="display: none;">
-                    
-                            <!-- Location Share -->
+    
                             <button type="button" id="shareLocation" class="btn btn-outline-success">
                                 <i class="fas fa-map-marker-alt"></i>
                             </button>
-                    
-                            <!-- Text Message -->
+    
                             <input type="text" class="form-control" id="messageInput" placeholder="Type a message...">
-                    
-                            <!-- Send -->
+    
                             <button class="btn btn-primary"><i class="fas fa-paper-plane"></i></button>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -196,6 +177,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.6.1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
     <script src="/js/user-dashboard.js"></script>
 
 

@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,17 +63,28 @@ public class ToolService {
     }
 
     public List<String> uploadMultipleFiles(MultipartFile[] files) {
+        if (files == null || files.length == 0) {
+            return Collections.emptyList(); // or throw new IllegalArgumentException("No files provided");
+        }
+
         List<String> imageUrls = new ArrayList<>();
         for (MultipartFile file : files) {
+            if (file == null || file.isEmpty()) {
+                continue; // skip empty/null files
+            }
+
             try {
                 String url = cloudService.uploadFile(file);
                 imageUrls.add(url);
             } catch (IOException e) {
-                throw new RuntimeException("Failed to upload image: " + file.getOriginalFilename(), e);
+                throw new RuntimeException("Failed to upload image: " +
+                        (file != null ? file.getOriginalFilename() : "unknown"),
+                        e);
             }
         }
         return imageUrls;
     }
+
 
     public List<ToolDto> getToolsByUserId(String userId) {
         List<Tool> tools = toolRepository.findByUserId(userId);

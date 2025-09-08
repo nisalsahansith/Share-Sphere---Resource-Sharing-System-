@@ -30,6 +30,8 @@ public class PaymentService {
                 () -> new RuntimeException("Exchange not found")
         );
 
+        exchange.setStatus(Exchange.Status.PAYED);
+
         Payment payment = Payment.builder()
                 .amount(paymentDto.getAmount())
                 .paymentDate(paymentDto.getPaymentDate())
@@ -41,6 +43,7 @@ public class PaymentService {
                 .transactionId(paymentDto.getTransactionId())
                 .build();
         paymentRepository.save(payment);
-        return "Payment Done succefully";
+        exchangeRepository.save(exchange);
+        return "Payment Done successfully";
     }
 }

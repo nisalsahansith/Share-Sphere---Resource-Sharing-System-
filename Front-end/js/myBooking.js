@@ -106,6 +106,66 @@ function generateBookingCard(booking) {
         } else if (booking.toolRequestDto?.price) {
             price = booking.toolRequestDto.price; // Use booking.toolRequestDto.price first
         }
+    
+    let actionHtml = '';
+    if (booking.status === 'PAYED') {
+        actionHtml = `
+            <div class="payment-section">
+                <div class="payment-success">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <div style="font-weight:700;margin-bottom:0.2rem;">Payment Completed</div>
+                        <div style="font-size:0.85rem;opacity:0.8;">Transaction secured</div>
+                    </div>
+                    <div class="payment-id">${booking.paymentId}</div>
+                </div>
+            </div>
+            <div class="booking-actions">
+                <button class="btn btn-success btn-sm" disabled>
+                    <i class="fas fa-credit-card me-2"></i> Paid
+                </button>
+                <button class="btn btn-primary btn-sm" onclick="confirmWorkDone(${booking.exchangeId})">
+                    <i class="fas fa-check me-2"></i> Complete
+                </button>
+            </div>
+        `;
+    } else if (booking.status !== 'completed' && booking.status !== 'REJECTED') {
+        actionHtml = `
+            <div class="booking-actions">
+                <button class="btn-pay-now pulse-payment" data-id="${booking.exchangeId}">
+                    <i class="fas fa-credit-card me-2"></i> Pay Now
+                </button>
+                <button class="btn-secondary-action" onclick="contactProvider(${booking.exchangeId}, '${localStorage.getItem("userId")}', '${booking.giverId}')">
+                    <i class="fas fa-message me-2"></i> Contact
+                </button>
+                <button class="btn btn-danger btn-sm"onclick="rejectWork(${booking.exchangeId})">
+                    <i class="fas fa-times me-2"></i> Reject
+                </button>
+            </div>
+        `;
+    } else if (booking.status === 'completed') {
+        actionHtml = `
+            <div class="booking-actions">
+                <button class="btn-secondary-action" onclick="rateBooking(${booking.exchangeId})">
+                    <i class="fas fa-star me-2"></i> Rate & Review
+                </button>
+                <button class="btn-secondary-action" onclick="rebookService(${booking.exchangeId})">
+                    <i class="fas fa-repeat me-2"></i> Book Again
+                </button>
+            </div>
+        `;
+   } else if (booking.status === 'REJECTED') {
+    actionHtml = `
+        <div class="booking-actions">
+            <button class="btn-secondary-action" onclick="contactProvider(${booking.exchangeId}, '${localStorage.getItem("userId")}', '${booking.giverId}')">
+                <i class="fas fa-message me-2"></i> Contact
+            </button>
+            <button class="btn btn-danger btn-sm" disabled style="background-color:gray; border-color:gray">
+                <i class="fas fa-times me-2"></i> Rejected
+            </button>
+        </div>
+    `;
+}
 
 
     const card = $(`
@@ -168,39 +228,7 @@ function generateBookingCard(booking) {
                         </div>
                     </div>
 
-                    <!-- Payment / Actions -->
-                    ${booking.paymentId ? `
-                        <div class="payment-section">
-                            <div class="payment-success">
-                                <i class="fas fa-check-circle"></i>
-                                <div>
-                                    <div style="font-weight:700;margin-bottom:0.2rem;">Payment Completed</div>
-                                    <div style="font-size:0.85rem;opacity:0.8;">Transaction secured</div>
-                                </div>
-                                <div class="payment-id">${booking.paymentId}</div>
-                            </div>
-                        </div>
-                    ` : booking.status !== 'cancelled' && booking.status !== 'completed' ? `
-                        <div class="booking-actions">
-                            <button class="btn-pay-now pulse-payment" data-id="${booking.exchangeId}">
-                                <i class="fas fa-credit-card me-2"></i>Pay Now
-                            </button>
-                            <button class="btn-secondary-action" onclick="contactProvider(${booking.exchangeId})">
-                                <i class="fas fa-message me-2"></i>Contact
-                            </button>
-                        </div>
-                    ` : ''}
-
-                    ${booking.status === 'completed' ? `
-                        <div class="booking-actions">
-                            <button class="btn-secondary-action" onclick="rateBooking(${booking.exchangeId})">
-                                <i class="fas fa-star me-2"></i>Rate & Review
-                            </button>
-                            <button class="btn-secondary-action" onclick="rebookService(${booking.exchangeId})">
-                                <i class="fas fa-repeat me-2"></i>Book Again
-                            </button>
-                        </div>
-                    ` : ''}
+                    ${actionHtml}
                 </div>
             </div>
         </div>
@@ -459,3 +487,71 @@ payhere.onError = function onError(error) {
     showPaymentSuccess(orderId);
     updateCardAfterPayment(orderId, "PAY_" + Math.random().toString(36).substr(2,9).toUpperCase());
 };
+
+function rejectWork(exchangeId) {
+    const token = localStorage.getItem('token'); // your auth token
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You are about to reject this booking!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Yes, reject it!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Create form data
+            const formData = new FormData();
+            formData.append('exchangeId', exchangeId);
+            formData.append('status', 'REJECTED');
+
+            $.ajax({
+                url: 'http://localhost:8080/myworks/updatestatus',
+                type: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                data: formData,
+                processData: false, // prevents jQuery from converting FormData to string
+                contentType: false, // lets the browser set correct multipart/form-data
+                success: function(response) {
+                    // Update UI
+                    const card = $(`[data-booking-id="${exchangeId}"]`);
+                    card.find('.btn-pay-now').remove(); // hide Pay Now
+                    const rejectBtn = card.find('.btn-danger');
+                    rejectBtn.prop('disabled', true).html('<i class="fas fa-times me-2"></i> Rejected');
+                    card.find('.btn-secondary-action').prop('disabled', true); // optionally disable Contact
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Rejected!',
+                        text: 'The booking has been rejected successfully.',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops!',
+                        text: 'Failed to reject booking. Please try again.',
+                    });
+                }
+            });
+        }
+    });
+}
+
+
+function contactProvider(exchangeId, providerId, customerId) {
+    console.log(exchangeId,providerId,customerId)
+    // Save chat context in localStorage (or sessionStorage)
+    localStorage.setItem("chatExchangeId", exchangeId);
+    localStorage.setItem("chatProviderId", providerId);
+    localStorage.setItem("chatCustomerId", customerId);
+
+    // Redirect to messages page
+    window.location.href = "/pages/messages.html"; // adjust to your chat page path
+}

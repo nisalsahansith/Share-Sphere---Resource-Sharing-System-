@@ -26,6 +26,7 @@ public class ExchangeService {
                             .startTime(exchange.getStartTime())
                             .endTime(exchange.getEndTime())
                             .type(exchange.getType())
+                            .status(String.valueOf(exchange.getStatus()))
                             .paymentId(
                                     exchange.getPayment() != null
                                             ? exchange.getPayment().getPaymentId().toString()
@@ -89,6 +90,7 @@ public class ExchangeService {
                             .startTime(exchange.getStartTime())
                             .endTime(exchange.getEndTime())
                             .type(exchange.getType())
+                            .status(String.valueOf(exchange.getStatus()))
                             .paymentId(
                                     exchange.getPayment() != null
                                             ? exchange.getPayment().getPaymentId().toString()
@@ -140,4 +142,12 @@ public class ExchangeService {
                 .collect(Collectors.toList());
     }
 
+    public String updateExchangeStatus(String exchangeId, String status) {
+        Exchange exchange = exchangeRepository.findById(Long.valueOf(exchangeId)).orElseThrow(
+                ()-> new RuntimeException("Exchange not found")
+        );
+        exchange.setStatus(Exchange.Status.valueOf(status));
+        exchangeRepository.save(exchange);
+        return "Status update successful";
+    }
 }

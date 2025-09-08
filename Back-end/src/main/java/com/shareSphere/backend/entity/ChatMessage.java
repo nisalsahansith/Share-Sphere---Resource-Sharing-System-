@@ -9,12 +9,11 @@ import java.time.LocalDateTime;
 @Table(name = "chat_messages")
 @Data
 public class ChatMessage {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long messageId;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Long exchangeId;
 
     @Column(nullable = false)
@@ -23,8 +22,11 @@ public class ChatMessage {
     @Column(nullable = false)
     private String receiverId;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String content;
+    @Column(columnDefinition = "TEXT")
+    private String content; // for text messages
+
+    private String fileUrl; // optional, if file is sent
+    private String fileType; // optional, MIME type
 
     @Column(nullable = false)
     private LocalDateTime timestamp;

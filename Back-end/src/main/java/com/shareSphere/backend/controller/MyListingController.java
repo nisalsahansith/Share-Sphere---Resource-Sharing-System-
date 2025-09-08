@@ -84,6 +84,7 @@ public class MyListingController {
                 .giverId(giver)
                 .receiverId(receiver)
                 .type(Exchange.Type.valueOf(type.toUpperCase()))
+                .status(String.valueOf(Exchange.Status.PENDING))
                 .build();
 
         skillRequestService.updateSkillRequestStatus(skillRequestId, status, exchangeDto);
@@ -108,6 +109,7 @@ public class MyListingController {
                         .receiverId(receiver)
                         .type(Exchange.Type.valueOf(type.toUpperCase()))
                         .startTime(startTime)
+                        .status(String.valueOf(Exchange.Status.PENDING))
                         .endTime(endTime)
                 .build();
         toolRequestService.updateToolRequestStatus(toolRequestId, status,exchangeDto);

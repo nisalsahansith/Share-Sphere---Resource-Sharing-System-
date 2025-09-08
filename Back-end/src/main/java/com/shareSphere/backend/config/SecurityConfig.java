@@ -32,6 +32,9 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationCors()))
                 .authorizeHttpRequests(
                         auth -> auth.requestMatchers("/auth/**").permitAll()
+                                .requestMatchers("/ws-chat/**").permitAll()   // ✅ allow SockJS/WebSocket handshake
+                                .requestMatchers("/userbasic/forgot-password").permitAll()
+                                .requestMatchers("/userbasic/reset-password-with-otp").permitAll()
                                 .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
@@ -41,13 +44,17 @@ public class SecurityConfig {
 
     public CorsConfigurationSource corsConfigurationCors() {
         CorsConfiguration config = new CorsConfiguration();
+        config.addAllowedOriginPattern("http://127.0.0.1:5500"); // allow your frontend
+        config.addAllowedOriginPattern("http://localhost:5500");
         config.addAllowedOriginPattern("*");
         config.addAllowedMethod("*");
         config.addAllowedHeader("*");
-        config.setAllowCredentials(false);
+//        config.setAllowCredentials(false);
+        config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**",config);
+
         return source;
     }
 
@@ -58,5 +65,7 @@ public class SecurityConfig {
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
         return daoAuthenticationProvider;
     }
+
+
 
 }

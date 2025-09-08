@@ -170,3 +170,121 @@ a:hover {
     }
 }
 
+/* General modal improvements */
+.modal-content {
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    animation: fadeInUp 0.3s ease-in-out;
+}
+
+.modal-header {
+    border-bottom: none;
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    color: #fff;
+    border-radius: 15px 15px 0 0;
+}
+
+.modal-title {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+/* Input fields */
+.modal-body .form-control {
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    font-size: 15px;
+    border: 1px solid #e5e7eb;
+    transition: all 0.2s ease;
+}
+
+.modal-body .form-control:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+/* Buttons */
+.modal-body .btn {
+    border-radius: 10px;
+    padding: 0.75rem;
+    font-weight: 500;
+    transition: transform 0.2s ease;
+}
+
+.modal-body .btn-primary {
+    background-color: #6366f1;
+    border: none;
+}
+
+.modal-body .btn-primary:hover {
+    background-color: #4f46e5;
+    transform: translateY(-2px);
+}
+
+.modal-body .btn-success {
+    background-color: #10b981;
+    border: none;
+}
+
+.modal-body .btn-success:hover {
+    background-color: #059669;
+    transform: translateY(-2px);
+}
+
+/* Animation for modal */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Modal Header */
+.modal-header {
+    border-bottom: none;
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    color: #fff;
+    /* ensures text inside header is visible */
+    border-radius: 15px 15px 0 0;
+}
+
+.modal-title {
+    font-weight: 600;
+    font-size: 18px;
+    color: #fff !important;
+    /* force white text */
+}
+
+/* Close button visibility */
+.modal-header .btn-close {
+    filter: invert(1);
+    /* makes the close (X) icon visible on dark bg */
+    opacity: 0.8;
+}
+
+.modal-header .btn-close:hover {
+    opacity: 1;
+}
+
+/* Modal Body */
+.modal-body {
+    padding: 2rem;
+    color: #333;
+    /* dark text so it’s visible on white background */
+}
+
+/* Labels inside modal */
+.modal-body .form-label {
+    font-weight: 600;
+    color: #444;
+}

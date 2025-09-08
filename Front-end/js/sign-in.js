@@ -121,3 +121,54 @@ function redirectToDashboard(role) {
         })
     }
 }
+
+$(document).ready(function () {
+    let userEmail = "";
+
+    // Open Forgot Password modal
+    $("a:contains('Forgot password?')").click(function (e) {
+        e.preventDefault();
+        $("#forgotPasswordModal").modal("show");
+    });
+
+    // Step 1: Submit Email
+    $("#forgotPasswordForm").submit(function (e) {
+        e.preventDefault();
+        userEmail = $("#resetEmail").val();
+
+        $.ajax({
+            url: "http://localhost:8080/userbasic/forgot-password", // your backend endpoint
+            type: "GET",
+            contentType: "application/json",
+            data: { email: userEmail },
+            success: function (res) {
+                Swal.fire("OTP Sent!", "Check your email for the OTP code.", "success");
+                $("#forgotPasswordModal").modal("hide");
+                $("#otpModal").modal("show");
+            },
+            error: function () {
+                Swal.fire("Error", "Could not send OTP. Try again.", "error");
+            }
+        });
+    });
+
+    // Step 2: Verify OTP + Reset Password
+    $("#verifyOtpForm").submit(function (e) {
+        e.preventDefault();
+        const otp = $("#otpCode").val();
+        const newPassword = $("#newPassword").val();
+
+        $.ajax({
+            url: "http://localhost:8080/userbasic/reset-password-with-otp", // your backend endpoint
+            type: "POST",
+            data: { email: userEmail, otp: otp, newPassword: newPassword },
+            success: function (res) {
+                Swal.fire("Success", "Your password has been reset!", "success");
+                $("#otpModal").modal("hide");
+            },
+            error: function () {
+                Swal.fire("Error", "Invalid OTP or expired. Try again.", "error");
+            }
+        });
+    });
+});

@@ -19,6 +19,7 @@ public class ExchangeDto {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private String paymentId;
+    private String status;
 
     private SkillRequestDto skillRequestDto;
     private ToolRequestDto toolRequestDto;
