@@ -1,10 +1,8 @@
 package com.shareSphere.backend.service;
 
 import com.shareSphere.backend.dto.PricingDto;
-import com.shareSphere.backend.dto.SkillDto;
 import com.shareSphere.backend.dto.ToolDto;
 import com.shareSphere.backend.entity.Pricing;
-import com.shareSphere.backend.entity.Skill;
 import com.shareSphere.backend.entity.Tool;
 import com.shareSphere.backend.entity.User;
 import com.shareSphere.backend.repositories.PricingRepository;
@@ -183,7 +181,7 @@ public class ToolService {
         return "Tool deleted successfully!";
     }
 
-    public List<ToolDto> getAllSkills() {
+    public List<ToolDto> getAllTools() {
         List<Tool> tools = toolRepository.findAll();
         return tools.stream()
                 .map(tool -> {
@@ -236,5 +234,27 @@ public class ToolService {
                 .priceType(pricing.getPriceType())
                 .price(pricing.getPrice())
                 .build();
+    }
+
+    public String restrictTool(String listingId) {
+        try {
+            Tool tool = toolRepository.findByToolId(Long.parseLong(listingId));
+            tool.setAvailabilityStatus(Tool.AvailabilityStatus.RESTRICT);
+            toolRepository.save(tool);
+            return "Tool restricted!";
+        } catch (NumberFormatException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String unrestrictedTool(String listingId) {
+        try {
+            Tool tool = toolRepository.findByToolId(Long.parseLong(listingId));
+            tool.setAvailabilityStatus(Tool.AvailabilityStatus.ACTIVE);
+            toolRepository.save(tool);
+            return "Tool Unrestricted!";
+        } catch (NumberFormatException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

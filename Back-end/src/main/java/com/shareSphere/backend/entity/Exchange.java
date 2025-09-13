@@ -43,6 +43,12 @@ public class Exchange {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @OneToOne(mappedBy = "exchange", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Payout payout;
+
+    @OneToOne(mappedBy = "exchange", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Refund refund;
+
     public enum Type {
         SKILL, TOOL
     }

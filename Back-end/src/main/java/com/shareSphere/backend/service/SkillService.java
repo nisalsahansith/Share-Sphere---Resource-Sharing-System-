@@ -221,4 +221,22 @@ public class SkillService {
                 .priceType(pricing.getPriceType())
                 .build();
     }
+
+    public String restrictSkill(String listingId) {
+        Skill skill = skillRepository.findById(Long.valueOf(listingId)).orElseThrow(
+                ()->new RuntimeException("The skill not found")
+        );
+        skill.setAvailability(Skill.Availability.RESTRICT);
+        skillRepository.save(skill);
+        return "Skill restricted!";
+    }
+
+    public String unrestrictedSkill(String listingId) {
+        Skill skill = skillRepository.findById(Long.valueOf(listingId)).orElseThrow(
+                ()->new RuntimeException("The skill not found")
+        );
+        skill.setAvailability(Skill.Availability.ACTIVE);
+        skillRepository.save(skill);
+        return "Skill Unrestricted!";
+    }
 }

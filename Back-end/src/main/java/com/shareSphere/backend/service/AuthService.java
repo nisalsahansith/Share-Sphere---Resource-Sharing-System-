@@ -30,7 +30,7 @@ public class AuthService {
         }
 
         String token = jwtUtil.generateToken(user.getEmail());
-        return new AuthResponseDto(token,user.getRole().name(),user.getId());
+        return new AuthResponseDto(token,user.getRole().name(),user.getId(),user.getStatus());
     }
 
     public String register(RegisterDto registerDto){
@@ -46,6 +46,7 @@ public class AuthService {
                 ))
                 .email(registerDto.getEmail())
                 .role(Role.valueOf(registerDto.getRole()))
+                .status(registerDto.getStatus())
                 .build();
         userRepository.save(user);
         return "User registration Success";

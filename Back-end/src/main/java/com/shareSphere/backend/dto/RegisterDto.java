@@ -1,5 +1,6 @@
 package com.shareSphere.backend.dto;
 
+import com.shareSphere.backend.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,4 +13,5 @@ public class RegisterDto {
     private String password;
     private String email;
     private String role;
+    private User.Status status;
 }

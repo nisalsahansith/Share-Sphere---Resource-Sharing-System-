@@ -14,21 +14,34 @@ function connectWebSocket() {
 
         stompClient.subscribe("/topic/messages", function (messageOutput) {
             const message = JSON.parse(messageOutput.body);
+            console.log("All messages", message)
 
-            // Add new chat to list if doesn't exist
-            if ($(`.chat-item[data-chat='${message.exchangeId}']`).length === 0) {
-                const receiverId = message.senderId === currentUser ? message.receiverId : message.senderId;
-                addChatListItem(message.exchangeId, receiverId);
+            // Fallback: if exchangeId is null, build a composite ID
+            let chatKey = message.exchangeId
+                ? message.exchangeId
+                : `${message.senderId}-${message.receiverId}`;
+
+            // Add chat list item if not exists
+            if ($(`.chat-item[data-chat='${chatKey}']`).length === 0) {
+                const receiverId = message.senderId === currentUser
+                    ? message.receiverId
+                    : message.senderId;
+                // addChatListItem(chatKey, receiverId);
             }
 
-            // Render message if current chat
-            if (message.exchangeId === currentExchangeId) {
+            // Render only if it's the active chat
+            if (chatKey === currentExchangeId) {
                 const type = message.senderId === currentUser ? "outgoing" : "incoming";
                 renderMessage(message, type);
-            }
+            } else {
+                 const type = message.senderId === currentUser ? "outgoing" : "incoming";
+                renderMessage(message, type);
+             }
+            
         });
     });
 }
+
 
 // ------------------ Fetch Username ------------------
 function fetchUsername(userId, callback) {
@@ -49,18 +62,18 @@ function fetchUsername(userId, callback) {
 }
 
 // // ------------------ Add Chat List Item ------------------
-// function addChatListItem(exchangeId, receiverId) {
-//     console.log(receiverId)
-//     fetchUsername(receiverId, function(username) {
-//         if ($(`.chat-item[data-chat='${exchangeId}']`).length === 0) {
-//             $(".chat-list").append(`
-//                 <li class="chat-item list-group-item" data-chat="${exchangeId}" data-receiver="${receiverId}">
-//                     ${username}
-//                 </li>
-//             `);
-//         }
-//     });
-// }
+function addChatListItem(exchangeId, receiverId) {
+    console.log(receiverId)
+    fetchUsername(receiverId, function(username) {
+        if ($(`.chat-item[data-chat='${exchangeId}']`).length === 0) {
+            $(".chat-list").append(`
+                <li class="chat-item list-group-item" data-chat="${exchangeId}" data-receiver="${receiverId}">
+                    ${username}
+                </li>
+            `);
+        }
+    });
+}
 
 // // ------------------ Update Chat Header ------------------
 function updateChatHeader(receiverId) {
@@ -126,33 +139,57 @@ function loadMessages(exchangeId) {
 
 // ------------------ Send Text Message ------------------
 $("#messageForm").submit(function(e) {
+    // e.preventDefault();
+    // const msg = $("#messageInput").val().trim();
+    // console.log(senderId ,receiverID)
+    // const receiverId = currentUser === receiverID ? senderId : receiverID;
+    // console.log("CurrentUser",currentUser)
+
+    // if (!msg) return;
+    // console.log("MESSAGe",msg)
+
+    // const message = { senderId: currentUser, receiverId: receiverId, exchangeId: currentExchangeId, content: msg };
+
+    // $.ajax({
+    //     url: "http://localhost:8080/chat/send",
+    //     type: "POST",
+    //     contentType: "application/json",
+    //     headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') },
+    //     data: JSON.stringify(message),
+    //     success: function(savedMessage) {
+    //         renderMessage(savedMessage, "outgoing");
+    //         $("#messageInput").val("");
+
+    // //          if (stompClient && stompClient.connected) {
+    // //     stompClient.send("/app/chat.broadcast", {}, JSON.stringify(savedMessage));
+    // // }
+    //     },
+    //     error: function(err) { console.error("Failed to send message:", err); }
+    // });
     e.preventDefault();
     const msg = $("#messageInput").val().trim();
-    console.log(senderId ,receiverID)
-    const receiverId = currentUser === receiverID ? senderId : receiverID;
-    console.log("CurrentUser",currentUser)
-
     if (!msg) return;
-    console.log("MESSAGe",msg)
 
-    const message = { senderId: currentUser, receiverId: receiverId, exchangeId: currentExchangeId, content: msg };
+    // Determine receiverId
+    const receiverId = currentUser === receiverID ? senderId : receiverID;
 
-    $.ajax({
-        url: "http://localhost:8080/chat/send",
-        type: "POST",
-        contentType: "application/json",
-        headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') },
-        data: JSON.stringify(message),
-        success: function(savedMessage) {
-            renderMessage(savedMessage, "outgoing");
-            $("#messageInput").val("");
+    const message = {
+        senderId: currentUser,
+        receiverId: receiverId,
+        exchangeId: currentExchangeId,
+        content: msg
+    };
 
-            if(stompClient && stompClient.connected) {
-            stompClient.send("/app/chat.send", {}, JSON.stringify(savedMessage));
+    if (stompClient && stompClient.connected) {
+        // Send message to /app/chat.send
+        stompClient.send("/app/chat.send", {}, JSON.stringify(message));
+
+        // Render immediately for the sender
+        // renderMessage(message, "outgoing");
+        $("#messageInput").val("");
+    } else {
+        console.error("❌ WebSocket not connected!");
     }
-        },
-        error: function(err) { console.error("Failed to send message:", err); }
-    });
 });
 
 $(".chat-item").on("click", function () {

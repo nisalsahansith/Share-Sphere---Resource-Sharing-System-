@@ -23,6 +23,8 @@ public class User {
     private String email;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Skill> skills;
@@ -33,4 +35,8 @@ public class User {
     // One-to-one mapping with UserProfile
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserProfile profile;
+
+    public enum Status {
+        ACTIVE,BLOCK
+    }
 }

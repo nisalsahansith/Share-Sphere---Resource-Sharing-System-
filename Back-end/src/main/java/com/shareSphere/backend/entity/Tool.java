@@ -30,6 +30,7 @@ public class Tool {
     private String condition;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "availability_status", length = 20)
     private AvailabilityStatus availabilityStatus;
 
     private LocalDateTime createdAt;
@@ -47,6 +48,6 @@ public class Tool {
     private List<String> imageUrls = new ArrayList<>();
 
     public enum AvailabilityStatus {
-        AVAILABLE, UNAVAILABLE
+        AVAILABLE, UNAVAILABLE,RESTRICT,ACTIVE
     }
 }

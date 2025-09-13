@@ -1,11 +1,8 @@
 package com.shareSphere.backend.controller;
 
 import com.shareSphere.backend.dto.APIResponse;
-import com.shareSphere.backend.dto.PricingDto;
 import com.shareSphere.backend.dto.SkillDto;
 import com.shareSphere.backend.dto.ToolDto;
-import com.shareSphere.backend.entity.Skill;
-import com.shareSphere.backend.entity.Tool;
 import com.shareSphere.backend.service.SkillService;
 import com.shareSphere.backend.service.ToolRequestService;
 import com.shareSphere.backend.service.ToolService;
@@ -13,12 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/user")
@@ -42,7 +36,7 @@ public class UserDashboardController {
     @GetMapping("/getalltools")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<APIResponse> getAllTools() {
-        List<ToolDto> tools = toolService.getAllSkills();
+        List<ToolDto> tools = toolService.getAllTools();
         if (tools.isEmpty()) {
             return ResponseEntity.ok(new APIResponse(200, "ok", "No skills found"));
         }

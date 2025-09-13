@@ -1,5 +1,6 @@
 package com.shareSphere.backend.service;
 
+import com.shareSphere.backend.dto.UserProfileDto;
 import com.shareSphere.backend.entity.User;
 import com.shareSphere.backend.entity.UserProfile;
 import com.shareSphere.backend.repositories.UserProfileRepository;
@@ -81,5 +82,34 @@ public class UserProfileService {
         return imageUrls;
     }
 
+
+    public List<UserProfileDto> getAllUserDetail() {
+        List<User> userProfiles = userRepository.findAll();
+        List<UserProfileDto> userProfileDtos = new ArrayList<>();
+
+        for (User user : userProfiles) {
+            // Try to find UserProfile; if not found, return null
+            Optional<UserProfile> userProfileOpt = userProfileRepository.findByUserId(user.getId());
+
+            UserProfileDto userProfileDto = UserProfileDto.builder()
+                    .id(userProfileOpt.map(UserProfile::getId).orElse(null))
+                    .firstName(userProfileOpt.map(UserProfile::getFirstName).orElse(null))
+                    .lastName(userProfileOpt.map(UserProfile::getLastName).orElse(null))
+                    .address(userProfileOpt.map(UserProfile::getAddress).orElse(null))
+                    .userImage(userProfileOpt.map(UserProfile::getUserImage).orElse(null))
+                    .user(User.builder()
+                            .id(user.getId())
+                            .email(user.getEmail())
+                            .username(user.getUsername())
+                            .role(user.getRole())
+                            .status(user.getStatus())
+                            .build())
+                    .build();
+
+            userProfileDtos.add(userProfileDto);
+        }
+
+        return userProfileDtos;
+    }
 
 }

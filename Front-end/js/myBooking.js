@@ -374,98 +374,113 @@ $(document).on('click', '.btn-pay-now', function () {
 
 
 $(document).on('click', '#payHereButton', function () {
-    const exchangeId = $(this).data('id');
-    const amount = parseFloat($('#paymentAmount').text().replace('$', ''));
-    const receiverId = $(`.booking-card[data-booking-id="${exchangeId}"]`).data('receiver-id');
-    console.log("RECIEVER", receiverId)
-    const token = localStorage.getItem("token")
-
-    // Construct the payment payload
-    const paymentData = {
-        payerId: localStorage.getItem('userId'), // logged-in user
-        receiverId: receiverId, // replace with actual receiver
-        exchangeId: exchangeId.toString(),
-        amount: amount,
-        paymentMethod: "CARD",
-        paymentStatus: "COMPLETED",
-        paymentDate: new Date().toISOString(),
-        transactionId: "TRX" + Math.floor(Math.random() * 1000000000) 
-    };
-
-    $.ajax({
-        url: "http://localhost:8080/mybookings/paymentdone",
-        method: "POST",
-        contentType: "application/json",
-        headers: { "Authorization": "Bearer " + token },
-        data: JSON.stringify(paymentData),
-        success: function (response) {
-            // SweetAlert success
-            Swal.fire({
-                icon: 'success',
-                title: 'Payment Done',
-                text: `Payment for Booking #${exchangeId} was successful!`,
-                timer: 2000,
-                showConfirmButton: false
-            });
-
-            // Optionally update UI after 2 seconds
-            setTimeout(() => {
-                // Example: mark card as paid
-                const card = $(`.booking-card[data-booking-id="${exchangeId}"]`);
-                card.find('.booking-actions').html(`
-                    <div class="payment-section">
-                        <div class="payment-success">
-                            <i class="fas fa-check-circle"></i>
-                            <div>
-                                <div style="font-weight:700;margin-bottom:0.2rem;">Payment Completed</div>
-                                <div style="font-size:0.85rem;opacity:0.8;">Transaction secured</div>
-                            </div>
-                            <div class="payment-id">${paymentData.transactionId}</div>
-                        </div>
-                    </div>
-                `);
-            }, 2000);
-        },
-        error: function (err) {
-            console.error('Payment error:', err);
-            Swal.fire({
-                icon: 'error',
-                title: 'Payment Failed',
-                text: 'Something went wrong. Please try again.',
-            });
-        }
-    });
-
     // const exchangeId = $(this).data('id');
+    // const amount = parseFloat($('#paymentAmount').text().replace('$', ''));
+    // const receiverId = $(`.booking-card[data-booking-id="${exchangeId}"]`).data('receiver-id');
+    // console.log("RECIEVER", receiverId)
+    // const token = localStorage.getItem("token")
 
-    // // Get the card
-    // const card = $(`.booking-card[data-booking-id="${exchangeId}"]`);
-
-    // // Read the price from the booking-price div
-    // let price = parseFloat(card.find('.booking-price').data('price') || 0);
-
-    // // Create PayHere payment object
-    // var payment = {
-    //     sandbox: true, // Set to false in production
-    //     merchant_id: "1231936", // Replace with your sandbox merchant ID
-    //     return_url: "http://localhost:8080/payment-success",
-    //     cancel_url: "http://localhost:8080/payment-cancel",
-    //     notify_url: "http://localhost:8080/payment-notify",
-    //     order_id: exchangeId,
-    //     items: "Booking Payment",
-    //     amount: price,
-    //     currency: "USD",
-    //     first_name: "John",    // you can dynamically fill from user
-    //     last_name: "Doe",
-    //     email: "john@example.com",
-    //     phone: "0771234567",
-    //     address: "Galle",
-    //     city: "Galle",
-    //     country: "Sri Lanka"
+    // // Construct the payment payload
+    // const paymentData = {
+    //     payerId: localStorage.getItem('userId'), // logged-in user
+    //     receiverId: receiverId, // replace with actual receiver
+    //     exchangeId: exchangeId.toString(),
+    //     amount: amount,
+    //     paymentMethod: "CARD",
+    //     paymentStatus: "COMPLETED",
+    //     paymentDate: new Date().toISOString(),
+    //     transactionId: "TRX" + Math.floor(Math.random() * 1000000000) 
     // };
 
-    // // Start PayHere payment
-    // payhere.startPayment(payment);
+    // $.ajax({
+    //     url: "http://localhost:8080/mybookings/paymentdone",
+    //     method: "POST",
+    //     contentType: "application/json",
+    //     headers: { "Authorization": "Bearer " + token },
+    //     data: JSON.stringify(paymentData),
+    //     success: function (response) {
+    //         // SweetAlert success
+    //         Swal.fire({
+    //             icon: 'success',
+    //             title: 'Payment Done',
+    //             text: `Payment for Booking #${exchangeId} was successful!`,
+    //             timer: 2000,
+    //             showConfirmButton: false
+    //         });
+
+    //         // Optionally update UI after 2 seconds
+    //         setTimeout(() => {
+    //             // Example: mark card as paid
+    //             const card = $(`.booking-card[data-booking-id="${exchangeId}"]`);
+    //             card.find('.booking-actions').html(`
+    //                 <div class="payment-section">
+    //                     <div class="payment-success">
+    //                         <i class="fas fa-check-circle"></i>
+    //                         <div>
+    //                             <div style="font-weight:700;margin-bottom:0.2rem;">Payment Completed</div>
+    //                             <div style="font-size:0.85rem;opacity:0.8;">Transaction secured</div>
+    //                         </div>
+    //                         <div class="payment-id">${paymentData.transactionId}</div>
+    //                     </div>
+    //                 </div>
+    //             `);
+    //         }, 2000);
+    //     },
+    //     error: function (err) {
+    //         console.error('Payment error:', err);
+    //         Swal.fire({
+    //             icon: 'error',
+    //             title: 'Payment Failed',
+    //             text: 'Something went wrong. Please try again.',
+    //         });
+    //     }
+    // });
+
+    const exchangeId = $(this).data('id');
+    console.log(exchangeId)
+
+    // Get the card
+    const card = $(`.booking-card[data-booking-id="${exchangeId}"]`);
+
+    // Read the price from the booking-price div
+    let price = parseFloat(card.find('.booking-price').data('price') || 0);
+    console.log(price)
+    const token = localStorage.getItem("token"); // your JWT stored in localStorage
+
+    $.ajax({
+    url: "http://localhost:8080/payment/generate-hash",
+    type: "GET",
+    headers: {
+        "Authorization": "Bearer " + token   // ✅ Send token here
+    },
+    data: {
+        orderId: exchangeId,
+        amount: price.toFixed(2),
+        currency: "LKR"
+        },
+        success: function (response) {
+            var payment = {
+                sandbox: true,
+                merchant_id: "1231936",
+                return_url: "http://localhost:8080/payment-success",
+                cancel_url: "http://localhost:8080/payment-cancel",
+                notify_url: "http://localhost:8080/payment-notify",
+                order_id: exchangeId,
+                items: "Booking Payment",
+                amount: price.toFixed(2),
+                currency: "LKR",
+                first_name: "John",
+                last_name: "Doe",
+                email: "john@example.com",
+                phone: "0771234567",
+                address: "Galle",
+                city: "Galle",
+                country: "Sri Lanka",
+                hash: response.hash
+            };
+            payhere.startPayment(payment);
+        }
+    });
 });
 
 payhere.onCompleted = function onCompleted(orderId) {

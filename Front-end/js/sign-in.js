@@ -27,6 +27,17 @@ $('.sign-in-form').on('submit', function (event) {
             password: password
         }),
         success: function (response) {
+           if (response.data.status === "BLOCK") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'User Blocked',
+                    text: 'This user has been blocked and cannot perform any actions.',
+                    confirmButtonColor: '#d33',
+                    confirmButtonText: 'OK'
+                });
+               return
+            }
+
             
             if (response.code === 200) {
                 Swal.fire({
@@ -71,11 +82,11 @@ $('.sign-in-form').on('submit', function (event) {
             }
             
             Swal.fire({
-            icon: errorIcon,
-            title: errorTitle,
-            text: errorMessage,
-            confirmButtonText: 'Try Again'
-        });
+                icon: 'error', // <-- use string 'error'
+                title: 'Login Failed', // <-- fixed title
+                text: errorMessage,
+                confirmButtonText: 'Try Again'
+            });
         },
         complete: function () {
             submitButton.prop('disabled', false).text('Sign In');

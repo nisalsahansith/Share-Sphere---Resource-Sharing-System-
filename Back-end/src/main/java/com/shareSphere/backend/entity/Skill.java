@@ -27,6 +27,7 @@ public class Skill {
     private String description;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "availability" ,length = 20)
     private Availability availability;
 
     private LocalDateTime createdAt;
@@ -40,6 +41,6 @@ public class Skill {
     private List<String> imageUrls = new ArrayList<>();
 
     public enum Availability {
-        AVAILABLE, UNAVAILABLE
+        AVAILABLE, UNAVAILABLE,RESTRICT,ACTIVE
     }
 }

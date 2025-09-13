@@ -588,11 +588,12 @@ function loadListings() {
         console.error("Expected array in response.data but got:", listings);
         return;
       }
+        const filteredListings = listings.filter(tool => String(tool.userId) !== String(localStorage.getItem("userId")));
 
       const container = $("#listingContainer");
       container.empty();
 
-      listings.forEach((listing, index) => {
+      filteredListings.forEach((listing, index) => {
         // Create carousel slides
         let carouselItems = listing.imageUrls.map((img, i) => `
           <div class="carousel-item ${i === 0 ? "active" : ""}">
@@ -663,11 +664,12 @@ function loadSkills() {
         console.error("Expected array in response.data but got:", skills);
         return;
       }
+        const filteredListings = skills.filter(skill => String(skill.userId) !== String(localStorage.getItem("userId")));
 
       const container = $("#skillsContainer");
       container.empty();
 
-      skills.forEach((skill, index) => {
+      filteredListings.forEach((skill, index) => {
         // Create carousel slides
         let carouselItems = skill.imageUrls.map((img, i) => `
           <div class="carousel-item ${i === 0 ? "active" : ""}">
@@ -730,5 +732,62 @@ $(document).on("click", ".logout-btn", function () {
 });
 
 
+$(document).ready(function() {
+    const token = localStorage.getItem("token");
+    const loggedUserId = localStorage.getItem("userId");
+
+    let allListings = []; // To store all listings fetched
+
+    // Fetch all listings initially
+    function fetchListings() {
+        $.ajax({
+            url: "http://localhost:8080/user/getalltools",
+            type: "GET",
+            headers: { "Authorization": "Bearer " + token },
+            success: function(response) {
+                allListings = response.data.filter(listing => listing.userId != loggedUserId); // exclude current user's
+                renderListings(allListings);
+            },
+            error: function(xhr) {
+                console.error("Failed to fetch listings", xhr);
+            }
+        });
+    }
+
+    // Render listings dynamically
+    function renderListings(listings) {
+        const container = $("#listingContainer");
+        container.empty(); // clear previous listings
+
+        if(listings.length === 0) {
+            container.append(`<p class="text-muted">No listings found.</p>`);
+            return;
+        }
+
+        listings.forEach(listing => {
+            const card = `
+            <div class="card listing-card" style="width: 250px;">
+                <img src="${listing.imageUrl}" class="card-img-top" alt="${listing.name}">
+                <div class="card-body">
+                    <h5 class="card-title">${listing.name}</h5>
+                    <p class="card-text">${listing.description}</p>
+                    <p class="fw-bold">$${listing.pricePerHour}/hour | $${listing.pricePerDay}/day</p>
+                    <button class="btn btn-primary btn-sm view-btn" data-bs-toggle="modal" data-bs-target="#listingModal"
+                        data-title="${listing.name}"
+                        data-description="${listing.description}"
+                        data-conditions="${listing.conditions}"
+                        data-pricehour="${listing.pricePerHour}"
+                        data-priceday="${listing.pricePerDay}"
+                        data-image="${listing.imageUrl}">
+                        View
+                    </button>
+                </div>
+            </div>
+            `;
+            container.append(card);
+        });
+    }
+
+   });
 
 

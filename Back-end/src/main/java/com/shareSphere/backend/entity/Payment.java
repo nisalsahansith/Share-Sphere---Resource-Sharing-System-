@@ -43,6 +43,6 @@ public class Payment {
     }
 
     public enum PaymentStatus {
-        PENDING, COMPLETED, FAILED, REFUNDED
+        PENDING, COMPLETED, FAILED, REFUNDED,RELEASED
     }
 }

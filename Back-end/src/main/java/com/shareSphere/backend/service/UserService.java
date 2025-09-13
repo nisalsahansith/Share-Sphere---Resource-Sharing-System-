@@ -49,4 +49,24 @@ public class UserService {
 
         otpRepository.delete(otpEntity);
     }
+
+    public String blockUser(String userId) {
+        User user = userRepository.findById(userId).orElseThrow(()->new RuntimeException("User not Found"));
+        user.setStatus(User.Status.BLOCK);
+        userRepository.save(user);
+        return "User is Blocked";
+    }
+
+    public Object unblockUser(String userId) {
+        User user = userRepository.findById(userId).orElseThrow(()->new RuntimeException("User not Found"));
+        user.setStatus(User.Status.ACTIVE);
+        userRepository.save(user);
+        return "User is Unblocked";
+    }
+
+    public Object userDelete(String userId) {
+        User user = userRepository.findById(userId).orElseThrow(()->new RuntimeException("User not Found"));
+        userRepository.delete(user);
+        return "User Deleted successfully";
+    }
 }

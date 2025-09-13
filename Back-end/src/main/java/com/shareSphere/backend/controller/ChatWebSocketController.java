@@ -14,22 +14,18 @@ public class ChatWebSocketController {
 
     private final ChatService chatService;
 
-
-
     @MessageMapping("/chat.send")
     @SendTo("/topic/messages")
     public ChatMessage sendMessage(ChatMessageDto message) {
-        ChatMessage saved;
-
         if (message.getContent() != null) {
-            saved = chatService.sendTextMessage(
+            return chatService.sendTextMessage(
                     message.getExchangeId(),
                     message.getSenderId(),
                     message.getReceiverId(),
                     message.getContent()
             );
         } else {
-            saved = chatService.sendFileMessage(
+            return chatService.sendFileMessage(
                     message.getExchangeId(),
                     message.getSenderId(),
                     message.getReceiverId(),
@@ -37,7 +33,19 @@ public class ChatWebSocketController {
                     message.getFileType()
             );
         }
-
-        return saved;
     }
+
+    @MessageMapping("/chat.broadcast")
+    @SendTo("/topic/messages")
+    public ChatMessage broadcastMessage(ChatMessageDto message) {
+        // Save & return
+        return chatService.sendTextMessage(
+                message.getExchangeId(),
+                message.getSenderId(),
+                message.getReceiverId(),
+                message.getContent()
+        );
+    }
+
+
 }
